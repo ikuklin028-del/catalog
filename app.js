@@ -354,7 +354,9 @@ function renderProducts() {
         
         <!-- Подсказка о свайпе -->
         <div class="swipe-hint">
-          <i class="fa-solid fa-left-right"></i> Проведите, чтобы увидеть больше фото
+          <i class="fa-solid fa-left-right"></i>
+          <span class="swipe-hint-desktop">Проведите, чтобы увидеть больше фото</span>
+          <span class="swipe-hint-mobile">Проведите</span>
         </div>
 
         ${product.badge ? `<span class="card-badge">${product.badge}</span>` : ''}
