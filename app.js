@@ -25,7 +25,7 @@ const PRODUCTS = [
     specs: [
       { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
       { name: 'Глубина чаши', value: '95.5 см' },
-      { name: 'Рабочий объем', value: '1688 литров' },
+      { name: 'Рабочий объем', value: '1250 литров' },
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
       { name: 'Толщина металла', value: 'Стенки 1.5 мм, дно 3 мм' },
       { name: 'Сливной кран', value: '42 мм (1 1/4 дюйма) с шаровым краном' },
@@ -39,23 +39,26 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-2» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
-    oldPrice: 143400,
-    newPrice: 113400,
+    oldPrice: 151000,
+    newPrice: 121000,
     warranty: '2 года',
     lifetime: '12 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥 Популярность',
-    image: 'assets/chan_uch2.jpg',
-    imageInterior: 'assets/chan_uch2.jpg',
+    image: 'assets/chan_uch2_main.jpg',
+    imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
-      'assets/chan_uch2.jpg'
+      'assets/chan_uch2_live_1.jpg',
+      'assets/chan_uch2_live_2.jpg',
+      'assets/chan_uch2_live_3.jpg',
+      'assets/chan_uch2_live_4.jpg'
     ],
-    ladder: 'Приставная лестница из лиственницы с поручнями',
+    ladder: 'Металлическая лестница с площадкой и поручнем',
     stove: 'Печь ветрозащита (без дна)',
     specs: [
       { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
       { name: 'Глубина чаши', value: '95.5 см' },
-      { name: 'Рабочий объем', value: '1688 литров' },
+      { name: 'Рабочий объем', value: '1250 литров' },
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
       { name: 'Толщина металла', value: 'Стенки 1.5 мм, дно 3 мм' },
       { name: 'Сливной кран', value: '42 мм (1 1/4 дюйма) с шаровым краном' },
@@ -472,7 +475,12 @@ function initCountdownTimer() {
     const diff = nextSunday - now;
     
     if (diff <= 0) {
-      document.getElementById('countdown').innerHTML = "<span class='timer-expired'>Скидки продлены! Успейте заказать!</span>";
+      const expiredHtml = "<span class='timer-expired'>Скидки продлены! Успейте заказать!</span>";
+      const countdownEl = document.getElementById('countdown');
+      if (countdownEl) countdownEl.innerHTML = expiredHtml;
+      
+      const hCountdownEl = document.querySelector('.header-timer-countdown');
+      if (hCountdownEl) hCountdownEl.textContent = "Скидки продлены!";
       return;
     }
     
@@ -481,20 +489,189 @@ function initCountdownTimer() {
     const m = Math.floor((diff / 1000 / 60) % 60);
     const s = Math.floor((diff / 1000) % 60);
     
-    document.getElementById('days').textContent = d.toString().padStart(2, '0');
-    document.getElementById('hours').textContent = h.toString().padStart(2, '0');
-    document.getElementById('minutes').textContent = m.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = s.toString().padStart(2, '0');
+    const dStr = d.toString().padStart(2, '0');
+    const hStr = h.toString().padStart(2, '0');
+    const mStr = m.toString().padStart(2, '0');
+    const sStr = s.toString().padStart(2, '0');
+    
+    // Обновляем элементы основного таймера
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    if (daysEl) daysEl.textContent = dStr;
+    if (hoursEl) hoursEl.textContent = hStr;
+    if (minutesEl) minutesEl.textContent = mStr;
+    if (secondsEl) secondsEl.textContent = sStr;
+
+    // Обновляем элементы мини-таймера в шапке
+    const hDaysEl = document.getElementById('h-days');
+    const hHoursEl = document.getElementById('h-hours');
+    const hMinutesEl = document.getElementById('h-minutes');
+    const hSecondsEl = document.getElementById('h-seconds');
+
+    if (hDaysEl) hDaysEl.textContent = dStr;
+    if (hHoursEl) hHoursEl.textContent = hStr;
+    if (hMinutesEl) hMinutesEl.textContent = mStr;
+    if (hSecondsEl) hSecondsEl.textContent = sStr;
   }
   
   updateTimer();
   setInterval(updateTimer, 1000);
+
+  // Следим за скроллом для липкого таймера в шапке
+  const mainHeader = document.getElementById('main-header');
+  const timerContainer = document.getElementById('timer-container');
+
+  if (mainHeader && timerContainer) {
+    window.addEventListener('scroll', () => {
+      const rect = timerContainer.getBoundingClientRect();
+      const headerHeight = mainHeader.offsetHeight || 60;
+      
+      // Если нижняя граница основного таймера скрывается под шапкой
+      if (rect.bottom < headerHeight) {
+        mainHeader.classList.add('show-mini-timer');
+      } else {
+        mainHeader.classList.remove('show-mini-timer');
+      }
+    }, { passive: true });
+  }
 }
 
 // ИНИЦИАЛИЗАЦИЯ
 document.addEventListener('DOMContentLoaded', () => {
   initCountdownTimer();
   renderProducts();
+
+  // Инициализация полноэкранного просмотра фото (Lightbox)
+  const lightboxModal = document.getElementById('lightbox-modal');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = lightboxModal ? lightboxModal.querySelector('.lightbox-close') : null;
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+
+  let activeGalleryImages = [];
+  let activeImageIndex = 0;
+
+  function updateLightboxImage() {
+    if (activeGalleryImages.length === 0) return;
+    lightboxImg.style.opacity = '0.3';
+    lightboxImg.src = activeGalleryImages[activeImageIndex];
+    lightboxImg.onload = () => {
+      lightboxImg.style.opacity = '1';
+    };
+  }
+
+  function showNextImage() {
+    if (activeGalleryImages.length <= 1) return;
+    activeImageIndex = (activeImageIndex + 1) % activeGalleryImages.length;
+    updateLightboxImage();
+  }
+
+  function showPrevImage() {
+    if (activeGalleryImages.length <= 1) return;
+    activeImageIndex = (activeImageIndex - 1 + activeGalleryImages.length) % activeGalleryImages.length;
+    updateLightboxImage();
+  }
+
+  if (lightboxModal && lightboxImg) {
+    // Открытие при клике на картинку
+    document.addEventListener('click', (e) => {
+      const cardImg = e.target.closest('.card-gallery .card-image');
+      if (cardImg) {
+        const productCard = cardImg.closest('.product-card');
+        if (productCard) {
+          const productId = parseInt(productCard.id.replace('product-card-', ''));
+          const product = PRODUCTS.find(p => p.id === productId);
+          if (product) {
+            // Формируем массив всех слайдов точно так же, как при рендере
+            activeGalleryImages = [
+              product.image,
+              product.imageInterior,
+              ...(product.livePhotos || [])
+            ];
+            
+            // Находим индекс кликнутой картинки по относительному пути src
+            const clickedSrc = cardImg.getAttribute('src');
+            activeImageIndex = activeGalleryImages.indexOf(clickedSrc);
+            if (activeImageIndex === -1) activeImageIndex = 0;
+
+            lightboxImg.src = activeGalleryImages[activeImageIndex];
+            lightboxModal.classList.add('active');
+            document.body.classList.add('lightbox-open');
+          }
+        }
+      }
+    });
+
+    // Закрытие при клике на крестик
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', () => {
+        lightboxModal.classList.remove('active');
+        document.body.classList.remove('lightbox-open');
+        activeGalleryImages = [];
+      });
+    }
+
+    // Навигация по стрелкам
+    if (lightboxPrev) {
+      lightboxPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showPrevImage();
+      });
+    }
+
+    if (lightboxNext) {
+      lightboxNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showNextImage();
+      });
+    }
+
+    // Закрытие при клике на фон
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal || e.target.classList.contains('lightbox-content')) {
+        lightboxModal.classList.remove('active');
+        document.body.classList.remove('lightbox-open');
+        activeGalleryImages = [];
+      }
+    });
+
+    // Закрытие по кнопке Escape и навигация клавиатурой
+    document.addEventListener('keydown', (e) => {
+      if (!lightboxModal.classList.contains('active')) return;
+      
+      if (e.key === 'Escape') {
+        lightboxModal.classList.remove('active');
+        document.body.classList.remove('lightbox-open');
+        activeGalleryImages = [];
+      } else if (e.key === 'ArrowRight') {
+        showNextImage();
+      } else if (e.key === 'ArrowLeft') {
+        showPrevImage();
+      }
+    });
+
+    // Свайпы на мобильных устройствах
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightboxModal.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightboxModal.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      
+      const swipeThreshold = 50;
+      if (touchEndX < touchStartX - swipeThreshold) {
+        showNextImage(); // Свайп влево
+      } else if (touchEndX > touchStartX + swipeThreshold) {
+        showPrevImage(); // Свайп вправо
+      }
+    }, { passive: true });
+  }
   
   // Клик копирования названия
   document.addEventListener('click', (e) => {

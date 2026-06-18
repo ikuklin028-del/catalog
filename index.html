@@ -25,6 +25,18 @@
       <div class="brand-logo">
         <img src="assets/logo.webp" alt="Уральские Банные Чаны" class="brand-logo-img">
       </div>
+      
+      <!-- Mini Timer in Header -->
+      <div class="header-timer" id="header-timer">
+        <i class="fa-regular fa-clock icon-pulse"></i>
+        <span class="header-timer-countdown">
+          <span id="h-days">00</span>д&nbsp;
+          <span id="h-hours">00</span>:
+          <span id="h-minutes">00</span>:
+          <span id="h-seconds">00</span>
+        </span>
+      </div>
+
       <div class="header-badge">
         <span class="status-dot"></span>
         <span class="status-text">ИП Куклин И. А.</span>
@@ -129,6 +141,19 @@
       <p class="footer-copyright">© Уральские Банные Чаны. ИП Куклин И. А.</p>
     </div>
   </footer>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog">
+    <button class="lightbox-close" aria-label="Закрыть просмотр"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-arrow lightbox-prev" aria-label="Предыдущее фото" id="lightbox-prev"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="lightbox-content">
+      <div class="lightbox-wrapper">
+        <img id="lightbox-img" src="" alt="Увеличенное изображение чана">
+        <div class="lightbox-watermark"></div>
+      </div>
+    </div>
+    <button class="lightbox-arrow lightbox-next" aria-label="Следующее фото" id="lightbox-next"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
 
   <!-- Web App Logic -->
   <script src="app.js"></script>
