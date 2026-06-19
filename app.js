@@ -78,11 +78,9 @@ const PRODUCTS = [
     lifetime: '15 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥 Популярность',
-    image: 'assets/chan_uch3.jpg',
-    imageInterior: 'assets/chan_uch3.jpg',
-    livePhotos: [
-      'assets/chan_uch3.jpg'
-    ],
+    image: 'assets/chan_uch3_render.png',
+    imageInterior: 'assets/chan_uch3_interior.png',
+    livePhotos: [],
     ladder: 'Приставная лестница из лиственницы с поручнями',
     stove: 'Печь-подставка с металлическим дном',
     specs: [
@@ -320,11 +318,16 @@ function renderProducts() {
     ];
     
     // Генерация HTML слайдов
-    const slidesHtml = slides.map((imgSrc, index) => `
-      <div class="gallery-slide">
-        <img src="${imgSrc}" alt="${product.name} (фото ${index + 1})" class="card-image" loading="lazy">
-      </div>
-    `).join('');
+    const slidesHtml = slides.map((imgSrc, index) => {
+      const isRender = imgSrc.toLowerCase().endsWith('.png');
+      const slideClass = isRender ? 'gallery-slide is-render' : 'gallery-slide';
+      const imgClass = isRender ? 'card-image is-render' : 'card-image';
+      return `
+        <div class="${slideClass}">
+          <img src="${imgSrc}" alt="${product.name} (фото ${index + 1})" class="${imgClass}" loading="lazy">
+        </div>
+      `;
+    }).join('');
     
     // Генерация точек-индикаторов
     const dotsHtml = slides.map((_, index) => `
@@ -556,8 +559,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateLightboxImage() {
     if (activeGalleryImages.length === 0) return;
+    const currentSrc = activeGalleryImages[activeImageIndex];
+    if (currentSrc.toLowerCase().endsWith('.png')) {
+      lightboxImg.classList.add('is-render');
+    } else {
+      lightboxImg.classList.remove('is-render');
+    }
     lightboxImg.style.opacity = '0.3';
-    lightboxImg.src = activeGalleryImages[activeImageIndex];
+    lightboxImg.src = currentSrc;
     lightboxImg.onload = () => {
       lightboxImg.style.opacity = '1';
     };
@@ -597,7 +606,13 @@ document.addEventListener('DOMContentLoaded', () => {
             activeImageIndex = activeGalleryImages.indexOf(clickedSrc);
             if (activeImageIndex === -1) activeImageIndex = 0;
 
-            lightboxImg.src = activeGalleryImages[activeImageIndex];
+            const currentSrc = activeGalleryImages[activeImageIndex];
+            if (currentSrc.toLowerCase().endsWith('.png')) {
+              lightboxImg.classList.add('is-render');
+            } else {
+              lightboxImg.classList.remove('is-render');
+            }
+            lightboxImg.src = currentSrc;
             lightboxModal.classList.add('active');
             document.body.classList.add('lightbox-open');
           }
@@ -610,6 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lightboxClose.addEventListener('click', () => {
         lightboxModal.classList.remove('active');
         document.body.classList.remove('lightbox-open');
+        lightboxImg.classList.remove('is-render');
         activeGalleryImages = [];
       });
     }
@@ -634,6 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === lightboxModal || e.target.classList.contains('lightbox-content')) {
         lightboxModal.classList.remove('active');
         document.body.classList.remove('lightbox-open');
+        lightboxImg.classList.remove('is-render');
         activeGalleryImages = [];
       }
     });
@@ -645,6 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') {
         lightboxModal.classList.remove('active');
         document.body.classList.remove('lightbox-open');
+        lightboxImg.classList.remove('is-render');
         activeGalleryImages = [];
       } else if (e.key === 'ArrowRight') {
         showNextImage();
