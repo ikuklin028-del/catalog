@@ -436,7 +436,7 @@ button {
 .card-image-container {
   position: relative;
   aspect-ratio: 1 / 1;
-  overflow: hidden;
+  overflow: visible;
   background: #020704;
 }
 
@@ -1244,12 +1244,210 @@ body.lightbox-open {
   }
 }
 
+/* ==========================================================================
+   INTERACTIVE HOTSPOTS (WELD SEAMS POPUP)
+   ========================================================================== */
+.hotspot {
+  position: absolute;
+  z-index: 15;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hotspot.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hotspot.active {
+  z-index: 25; /* Поднимаем активную точку выше остальных, чтобы кнопки других точек не просвечивали сквозь открытый поп-ап */
+}
+
+/* Green hotspot button */
+.hotspot-btn {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  background-color: #3cbd3e; /* Bright green as in screenshot */
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  box-shadow: 0 4px 12px rgba(62, 189, 62, 0.4), 0 0 0 0px rgba(62, 189, 62, 0.4);
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.3s;
+  animation: hotspot-pulse 2s infinite ease-in-out;
+}
+
+/* Expand the clickable area on mobile without changing visual size */
+.hotspot-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+.hotspot-btn:hover {
+  background-color: #48d04a;
+  transform: scale(1.1);
+}
+
+.hotspot-btn:active {
+  transform: scale(0.95);
+}
+
+/* Pulse animation to attract clicks */
+@keyframes hotspot-pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(62, 189, 62, 0.4), 0 0 0 0px rgba(62, 189, 62, 0.4);
+  }
+  70% {
+    box-shadow: 0 4px 12px rgba(62, 189, 62, 0.4), 0 0 0 8px rgba(62, 189, 62, 0);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(62, 189, 62, 0.4), 0 0 0 0px rgba(62, 189, 62, 0);
+  }
+}
+
+/* Popup container style */
+.hotspot-popup {
+  position: absolute;
+  top: 42px; /* Position below the button */
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  width: 290px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.25s ease;
+  transform-origin: top center;
+}
+
+/* When the hotspot is active, show the popup */
+.hotspot.active .hotspot-popup {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* White triangle pointing up to the button */
+.hotspot-popup-arrow {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #ffffff;
+}
+
+/* Close button inside popup */
+.hotspot-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333333;
+  font-size: 11px;
+  transition: background-color 0.2s, color 0.2s;
+  z-index: 22;
+}
+
+.hotspot-popup-close:hover {
+  background: rgba(0, 0, 0, 0.15);
+  color: #000000;
+}
+
+/* Image inside popup */
+.hotspot-popup-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Title inside popup */
+.hotspot-popup-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0c2016;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+/* Description inside popup */
+.hotspot-popup-text {
+  font-size: 11px;
+  color: #555555;
+  line-height: 1.4;
+}
+
+/* Align right popup (shifts popup to the left to prevent horizontal clipping) */
+.hotspot-popup.right {
+  left: auto;
+  right: -30px;
+  transform: scale(0.9);
+  transform-origin: top right;
+}
+
+.hotspot.active .hotspot-popup.right {
+  transform: scale(1);
+}
+
+.hotspot-popup.right .hotspot-popup-arrow {
+  left: auto;
+  right: 30px;
+  transform: translateX(50%);
+}
+
+/* Responsive adjustment on narrow mobile screens */
+@media (max-width: 400px) {
+  .hotspot-popup {
+    width: 250px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hotspot-popup {
+    width: 230px;
+    padding: 10px;
+  }
+  .hotspot-popup.right {
+    right: -20px;
+  }
+  .hotspot-popup.right .hotspot-popup-arrow {
+    right: 20px;
+  }
+}
+
 /* Prefers Reduced Motion settings */
 @media (prefers-reduced-motion: reduce) {
-  .pulse, .status-dot, .icon-pulse, .timer-divider {
+  .pulse, .status-dot, .icon-pulse, .timer-divider, .hotspot-btn {
     animation: none !important;
   }
-  .product-card, .card-image, .arrow-icon, .btn-copy-title, .filter-btn {
+  .product-card, .card-image, .arrow-icon, .btn-copy-title, .filter-btn, .hotspot {
     transition: none !important;
   }
 }

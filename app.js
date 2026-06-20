@@ -11,9 +11,10 @@ const PRODUCTS = [
     lifetime: '12 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥 Популярность',
-    image: 'assets/chan_uch1.jpg',
+    image: 'assets/chan_uch1_render.png',
     imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
+      'assets/chan_uch1.jpg',
       'assets/chan_uch1_workshop.jpg',
       'assets/chan_uch1_live_1.jpg',
       'assets/chan_uch1_live_2.jpg',
@@ -22,6 +23,36 @@ const PRODUCTS = [
     ],
     ladder: 'Приставная лестница из лиственницы с поручнями',
     stove: 'Приварная печь из стали 09г2с (3 мм) с подставкой',
+    hotspots: [
+      {
+        id: 'seam',
+        slideIndex: 1,
+        x: 41,
+        y: 58,
+        title: 'Сварные швы зачищены и безопасны для купающихся',
+        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
+        image: 'assets/weld_seam.png'
+      },
+      {
+        id: 'footrest',
+        slideIndex: 1,
+        x: 52,
+        y: 82,
+        title: 'Прочное дно с подставкой для ног',
+        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
+        image: 'assets/footrest.png'
+      },
+      {
+        id: 'lining',
+        slideIndex: 1,
+        x: 72,
+        y: 42,
+        align: 'right',
+        title: 'Аккуратная отделка чана лиственницей сорта С',
+        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
+        image: 'assets/lining.png'
+      }
+    ],
     specs: [
       { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
       { name: 'Глубина чаши', value: '95.5 см' },
@@ -45,13 +76,44 @@ const PRODUCTS = [
     lifetime: '12 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥 Популярность',
-    image: 'assets/chan_uch2_main.jpg',
+    image: 'assets/chan_uch2_render.png',
     imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
+      'assets/chan_uch2_main.jpg',
       'assets/chan_uch2_live_1.jpg',
       'assets/chan_uch2_live_2.jpg',
       'assets/chan_uch2_live_3.jpg',
       'assets/chan_uch2_live_4.jpg'
+    ],
+    hotspots: [
+      {
+        id: 'seam',
+        slideIndex: 1,
+        x: 41,
+        y: 58,
+        title: 'Сварные швы зачищены и безопасны для купающихся',
+        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
+        image: 'assets/weld_seam.png'
+      },
+      {
+        id: 'footrest',
+        slideIndex: 1,
+        x: 52,
+        y: 82,
+        title: 'Прочное дно с подставкой для ног',
+        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
+        image: 'assets/footrest.png'
+      },
+      {
+        id: 'lining',
+        slideIndex: 1,
+        x: 72,
+        y: 42,
+        align: 'right',
+        title: 'Аккуратная отделка чана лиственницей сорта С',
+        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
+        image: 'assets/lining.png'
+      }
     ],
     ladder: 'Металлическая лестница с площадкой и поручнем',
     stove: 'Печь ветрозащита (без дна)',
@@ -80,7 +142,9 @@ const PRODUCTS = [
     badge: '🔥🔥 Популярность',
     image: 'assets/chan_uch3_render.png',
     imageInterior: 'assets/chan_uch3_interior.png',
-    livePhotos: [],
+    livePhotos: [
+      'assets/chan_uch3_live.jpg'
+    ],
     ladder: 'Приставная лестница из лиственницы с поручнями',
     stove: 'Печь-подставка с металлическим дном',
     specs: [
@@ -342,6 +406,25 @@ function renderProducts() {
       </div>
     `).join('');
 
+    // Генерация хотспотов
+    let hotspotsHtml = '';
+    if (product.hotspots) {
+      hotspotsHtml = product.hotspots.map(hotspot => `
+        <div class="hotspot" id="hotspot-${product.id}-${hotspot.id}" style="left: ${hotspot.x}%; top: ${hotspot.y}%;" data-slide="${hotspot.slideIndex}" data-base-x="${hotspot.x}">
+          <button class="hotspot-btn" aria-label="Показать детали">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="hotspot-popup ${hotspot.align || 'center'}">
+            <div class="hotspot-popup-arrow"></div>
+            <button class="hotspot-popup-close" aria-label="Закрыть"><i class="fa-solid fa-xmark"></i></button>
+            <img src="${hotspot.image}" alt="${hotspot.title}" class="hotspot-popup-img" loading="lazy">
+            <h4 class="hotspot-popup-title">${hotspot.title}</h4>
+            <p class="hotspot-popup-text">${hotspot.text}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
     const card = document.createElement('article');
     card.className = 'product-card';
     card.id = `product-card-${product.id}`;
@@ -366,6 +449,10 @@ function renderProducts() {
         </div>
 
         ${product.badge ? `<span class="card-badge">${product.badge}</span>` : ''}
+        
+        <!-- Хотспоты (интерактивные точки) -->
+        ${hotspotsHtml}
+        
         <div class="card-badges-absolute">
           <span class="badge-item warranty"><i class="fa-solid fa-shield-halved"></i> ${product.warranty} гарантии</span>
           <span class="badge-item lifetime"><i class="fa-solid fa-hourglass-half"></i> ${product.lifetime} службы</span>
@@ -433,7 +520,39 @@ function renderProducts() {
       const gallery = document.getElementById(`gallery-${product.id}`);
       if (gallery) {
         const dots = gallery.parentElement.querySelectorAll('.indicator-dot');
+        const hotspotElements = gallery.parentElement.querySelectorAll('.hotspot');
         
+        // Функция динамического позиционирования хотспотов для эффекта прокрутки вместе с фото
+        const updateHotspotPositions = () => {
+          const width = gallery.clientWidth;
+          const scrollLeft = gallery.scrollLeft;
+          
+          hotspotElements.forEach(hotspot => {
+            const slideIndex = parseInt(hotspot.getAttribute('data-slide'));
+            const baseXPercent = parseFloat(hotspot.getAttribute('data-base-x'));
+            
+            // Вычисляем смещение слайда относительно текущего scrollLeft
+            const slideOffset = (slideIndex * width) - scrollLeft;
+            const baseX = (baseXPercent / 100) * width;
+            const currentLeft = baseX + slideOffset;
+            
+            hotspot.style.left = `${currentLeft}px`;
+            
+            // Точка видна только тогда, когда её слайд в зоне видимости
+            if (currentLeft >= -20 && currentLeft <= width + 20) {
+              hotspot.classList.add('visible');
+              
+              // Закрываем открытый поп-ап, если пользователь прокрутил слайд в сторону на 30% и более
+              if (Math.abs(slideOffset) > width * 0.3) {
+                hotspot.classList.remove('active');
+              }
+            } else {
+              hotspot.classList.remove('visible');
+              hotspot.classList.remove('active');
+            }
+          });
+        };
+
         // Переключение по точкам при клике
         dots.forEach((dot, index) => {
           dot.addEventListener('click', () => {
@@ -458,7 +577,46 @@ function renderProducts() {
               dot.classList.remove('active');
             }
           });
+
+          updateHotspotPositions();
+        }, { passive: true });
+
+        // Поддержка изменения размеров экрана и поворота устройства
+        window.addEventListener('resize', updateHotspotPositions, { passive: true });
+
+        // Обработка кликов по хотспотам
+        hotspotElements.forEach(hotspot => {
+          const btn = hotspot.querySelector('.hotspot-btn');
+          const closeBtn = hotspot.querySelector('.hotspot-popup-close');
+          
+          if (btn) {
+            btn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              // Закрываем все остальные открытые хотспоты на этой карточке
+              hotspotElements.forEach(h => {
+                if (h !== hotspot) h.classList.remove('active');
+              });
+              hotspot.classList.toggle('active');
+            });
+          }
+          
+          if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              hotspot.classList.remove('active');
+            });
+          }
+          
+          // Закрытие при клике по самому документу
+          document.addEventListener('click', (e) => {
+            if (!hotspot.contains(e.target)) {
+              hotspot.classList.remove('active');
+            }
+          });
         });
+
+        // Первичная инициализация позиций хотспотов
+        updateHotspotPositions();
       }
     }, 100);
   });
