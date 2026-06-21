@@ -1421,6 +1421,24 @@ body.lightbox-open {
   transform: translateX(50%);
 }
 
+/* Align left popup (shifts popup to the right to prevent horizontal clipping) */
+.hotspot-popup.left {
+  right: auto;
+  left: -30px;
+  transform: scale(0.9);
+  transform-origin: top left;
+}
+
+.hotspot.active .hotspot-popup.left {
+  transform: scale(1);
+}
+
+.hotspot-popup.left .hotspot-popup-arrow {
+  right: auto;
+  left: 30px;
+  transform: translateX(-50%);
+}
+
 /* Responsive adjustment on narrow mobile screens */
 @media (max-width: 400px) {
   .hotspot-popup {
@@ -1439,6 +1457,12 @@ body.lightbox-open {
   }
   .hotspot-popup.right .hotspot-popup-arrow {
     right: 20px;
+  }
+  .hotspot-popup.left {
+    left: -20px;
+  }
+  .hotspot-popup.left .hotspot-popup-arrow {
+    left: 20px;
   }
 }
 
