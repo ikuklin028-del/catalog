@@ -334,7 +334,7 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
     image: 'assets/chan_uch6_render.png',
-    imageInterior: 'assets/chan_uch6_interior.jpg',
+    imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
       'assets/chan_summer_430.jpg',
       'assets/chan_summer_interior_live.jpg',
@@ -403,7 +403,7 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
     image: 'assets/chan_uch6_render.png',
-    imageInterior: 'assets/chan_uch6_interior.jpg',
+    imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
       'assets/chan_summer_304.jpg',
       'assets/chan_summer_interior_live.jpg',
