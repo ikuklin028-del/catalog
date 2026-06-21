@@ -15,8 +15,10 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
       'assets/chan_uch1.jpg',
-      'assets/chan_safety_banner.jpg',
       'assets/chan_thermal_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
       'assets/chan_uch1_workshop.jpg',
       'assets/chan_uch1_live_1.jpg',
       'assets/chan_uch1_live_2.jpg',
@@ -82,8 +84,12 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
       'assets/chan_uch2_main.jpg',
-      'assets/chan_safety_banner.jpg',
       'assets/chan_thermal_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
+      'assets/chan_bright_banner.jpg',
+      'assets/chan_family_live.jpg',
       'assets/chan_uch2_live_1.jpg',
       'assets/chan_uch2_live_2.jpg',
       'assets/chan_uch2_live_3.jpg',
@@ -150,6 +156,10 @@ const PRODUCTS = [
       'assets/chan_uch3_live.jpg',
       'assets/chan_safety_banner.jpg',
       'assets/chan_thermal_banner.png',
+      'assets/chan_hotel_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
       'assets/chan_summer_3_4_live.jpg'
     ],
     hotspots: [
@@ -214,6 +224,12 @@ const PRODUCTS = [
       'assets/chan_uch3_live.jpg',
       'assets/chan_safety_banner.jpg',
       'assets/chan_thermal_banner.png',
+      'assets/chan_hotel_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
+      'assets/chan_bright_banner.jpg',
+      'assets/chan_family_live.jpg',
       'assets/chan_summer_3_4_live.jpg'
     ],
     hotspots: [
@@ -278,7 +294,12 @@ const PRODUCTS = [
     livePhotos: [
       'assets/chan_uch5_live_people.jpg',
       'assets/chan_safety_banner.jpg',
+      'assets/chan_cover_banner.png',
       'assets/chan_thermal_banner.png',
+      'assets/chan_hotel_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
       'assets/chan_uch5_live_woman.jpg'
     ],
     hotspots: [
@@ -349,6 +370,10 @@ const PRODUCTS = [
       'assets/chan_summer_430.jpg',
       'assets/chan_safety_banner.jpg',
       'assets/chan_thermal_banner.png',
+      'assets/chan_hotel_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
       'assets/chan_summer_interior_live.jpg',
       'assets/chan_summer_live_night.jpg',
       'assets/chan_summer_live_backyard.jpg',
@@ -420,6 +445,12 @@ const PRODUCTS = [
       'assets/chan_summer_304.jpg',
       'assets/chan_safety_banner.jpg',
       'assets/chan_thermal_banner.png',
+      'assets/chan_hotel_banner.png',
+      'assets/chan_spa_banner.png',
+      'assets/chan_pine_banner.jpg',
+      'assets/chan_delivery_banner.jpg',
+      'assets/chan_bright_banner.jpg',
+      'assets/chan_family_live.jpg',
       'assets/chan_summer_interior_live.jpg',
       'assets/chan_summer_live_night.jpg',
       'assets/chan_summer_live_backyard.jpg',
@@ -507,7 +538,7 @@ function renderProducts() {
     const slidesHtml = slides.map((imgSrc, index) => {
       const isRender = imgSrc.toLowerCase().endsWith('.png') && !imgSrc.includes('banner');
       const isSafety = imgSrc.includes('safety_banner');
-      const isThermal = imgSrc.includes('thermal_banner');
+      const isThermal = imgSrc.includes('thermal_banner') || imgSrc.includes('hotel_banner') || imgSrc.includes('spa_banner') || imgSrc.includes('pine_banner') || imgSrc.includes('delivery_banner') || imgSrc.includes('cover_banner') || imgSrc.includes('bright_banner');
       const slideClass = isRender ? 'gallery-slide is-render' : (isSafety ? 'gallery-slide is-safety' : (isThermal ? 'gallery-slide is-thermal' : 'gallery-slide'));
       const imgClass = isRender ? 'card-image is-render' : (isSafety ? 'card-image is-safety' : (isThermal ? 'card-image is-thermal' : 'card-image'));
       return `
@@ -848,7 +879,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLightboxImage() {
     if (activeGalleryImages.length === 0) return;
     const currentSrc = activeGalleryImages[activeImageIndex];
-    if (currentSrc.toLowerCase().endsWith('.png')) {
+    if (currentSrc.toLowerCase().endsWith('.png') && !currentSrc.includes('banner')) {
       lightboxImg.classList.add('is-render');
     } else {
       lightboxImg.classList.remove('is-render');

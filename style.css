@@ -513,7 +513,8 @@ button {
   object-fit: contain;
 }
 
-.gallery-slide.is-safety::after {
+.gallery-slide.is-safety::after,
+.gallery-slide.is-thermal::after {
   display: none;
 }
 
