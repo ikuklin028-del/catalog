@@ -505,6 +505,26 @@ button {
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.15));
 }
 
+.gallery-slide.is-safety {
+  background-color: #000000;
+}
+
+.card-image.is-safety {
+  object-fit: contain;
+}
+
+.gallery-slide.is-safety::after {
+  display: none;
+}
+
+.gallery-slide.is-thermal {
+  background-color: #000000;
+}
+
+.card-image.is-thermal {
+  object-fit: contain;
+}
+
 .product-card:hover .gallery-slide:first-child .card-image {
   transform: scale(1.03);
 }

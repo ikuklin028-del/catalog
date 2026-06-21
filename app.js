@@ -15,6 +15,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
       'assets/chan_uch1.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_uch1_workshop.jpg',
       'assets/chan_uch1_live_1.jpg',
       'assets/chan_uch1_live_2.jpg',
@@ -80,6 +82,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_uch1_interior.jpg',
     livePhotos: [
       'assets/chan_uch2_main.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_uch2_live_1.jpg',
       'assets/chan_uch2_live_2.jpg',
       'assets/chan_uch2_live_3.jpg',
@@ -144,6 +148,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_uch3_interior.jpg',
     livePhotos: [
       'assets/chan_uch3_live.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_summer_3_4_live.jpg'
     ],
     hotspots: [
@@ -206,6 +212,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_uch3_interior.jpg',
     livePhotos: [
       'assets/chan_uch3_live.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_summer_3_4_live.jpg'
     ],
     hotspots: [
@@ -269,6 +277,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
       'assets/chan_uch5_live_people.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_uch5_live_woman.jpg'
     ],
     hotspots: [
@@ -337,6 +347,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
       'assets/chan_summer_430.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_summer_interior_live.jpg',
       'assets/chan_summer_live_night.jpg',
       'assets/chan_summer_live_backyard.jpg',
@@ -406,6 +418,8 @@ const PRODUCTS = [
     imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
       'assets/chan_summer_304.jpg',
+      'assets/chan_safety_banner.jpg',
+      'assets/chan_thermal_banner.png',
       'assets/chan_summer_interior_live.jpg',
       'assets/chan_summer_live_night.jpg',
       'assets/chan_summer_live_backyard.jpg',
@@ -491,9 +505,11 @@ function renderProducts() {
     
     // Генерация HTML слайдов
     const slidesHtml = slides.map((imgSrc, index) => {
-      const isRender = imgSrc.toLowerCase().endsWith('.png');
-      const slideClass = isRender ? 'gallery-slide is-render' : 'gallery-slide';
-      const imgClass = isRender ? 'card-image is-render' : 'card-image';
+      const isRender = imgSrc.toLowerCase().endsWith('.png') && !imgSrc.includes('banner');
+      const isSafety = imgSrc.includes('safety_banner');
+      const isThermal = imgSrc.includes('thermal_banner');
+      const slideClass = isRender ? 'gallery-slide is-render' : (isSafety ? 'gallery-slide is-safety' : (isThermal ? 'gallery-slide is-thermal' : 'gallery-slide'));
+      const imgClass = isRender ? 'card-image is-render' : (isSafety ? 'card-image is-safety' : (isThermal ? 'card-image is-thermal' : 'card-image'));
       return `
         <div class="${slideClass}">
           <img src="${imgSrc}" alt="${product.name} (фото ${index + 1})" class="${imgClass}" loading="lazy">
