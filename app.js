@@ -141,9 +141,10 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥 Популярность',
     image: 'assets/chan_uch3_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
+    imageInterior: 'assets/chan_uch3_interior.jpg',
     livePhotos: [
-      'assets/chan_uch3_live.jpg'
+      'assets/chan_uch3_live.jpg',
+      'assets/chan_summer_3_4_live.jpg'
     ],
     hotspots: [
       {
@@ -202,9 +203,10 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥 Популярность',
     image: 'assets/chan_uch3_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
+    imageInterior: 'assets/chan_uch3_interior.jpg',
     livePhotos: [
-      'assets/chan_uch3_live.jpg'
+      'assets/chan_uch3_live.jpg',
+      'assets/chan_summer_3_4_live.jpg'
     ],
     hotspots: [
       {
@@ -266,7 +268,8 @@ const PRODUCTS = [
     image: 'assets/chan_uch5_render.png',
     imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
-      'assets/chan_uch3_live.jpg'
+      'assets/chan_uch5_live_people.jpg',
+      'assets/chan_uch5_live_woman.jpg'
     ],
     hotspots: [
       {
@@ -331,9 +334,14 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
     image: 'assets/chan_uch6_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
+    imageInterior: 'assets/chan_uch6_interior.jpg',
     livePhotos: [
-      'assets/chan_summer_430.jpg'
+      'assets/chan_summer_430.jpg',
+      'assets/chan_summer_interior_live.jpg',
+      'assets/chan_summer_live_night.jpg',
+      'assets/chan_summer_live_backyard.jpg',
+      'assets/chan_summer_live_woman.jpg',
+      'assets/chan_summer_live_aframe.jpg'
     ],
     hotspots: [
       {
@@ -395,9 +403,14 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
     image: 'assets/chan_uch6_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
+    imageInterior: 'assets/chan_uch6_interior.jpg',
     livePhotos: [
-      'assets/chan_summer_304.jpg'
+      'assets/chan_summer_304.jpg',
+      'assets/chan_summer_interior_live.jpg',
+      'assets/chan_summer_live_night.jpg',
+      'assets/chan_summer_live_backyard.jpg',
+      'assets/chan_summer_live_woman.jpg',
+      'assets/chan_summer_live_aframe.jpg'
     ],
     hotspots: [
       {
