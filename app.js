@@ -324,16 +324,16 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-6» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
-    oldPrice: 189700,
+    oldPrice: 204900,
     newPrice: 167050,
     warranty: '7 лет',
     lifetime: '15 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '🔥🔥🔥 Популярность',
-    image: 'assets/chan_summer_430.jpg',
+    badge: '🔥🔥🔥 Хит сезона',
+    image: 'assets/chan_uch6_render.png',
     imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
-      'assets/chan_uch3_live.jpg'
+      'assets/chan_summer_430.jpg'
     ],
     hotspots: [
       {
@@ -388,13 +388,13 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-7» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
-    oldPrice: 217500,
+    oldPrice: 230900,
     newPrice: 192550,
     warranty: '15 лет',
     lifetime: '30 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '🔥🔥🔥 Популярность',
-    image: 'assets/chan_summer_304.jpg',
+    badge: '🔥🔥🔥 Хит сезона',
+    image: 'assets/chan_uch6_render.png',
     imageInterior: 'assets/chan_summer_interior.jpg',
     livePhotos: [
       'assets/chan_summer_304.jpg'
@@ -446,132 +446,6 @@ const PRODUCTS = [
       { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
       { name: 'Внутренняя отделка', value: 'Лиственница сорта А ("Стандарт")' }
     ]
-  },
-  {
-    id: 8,
-    name: 'Комплект «Летний» AISI 430',
-    category: 'summer',
-    steel: 'AISI 430',
-    oldPrice: 182700,
-    newPrice: 159000,
-    warranty: '7 лет',
-    lifetime: '15 лет',
-    gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '☀️ Хит сезона',
-    image: 'assets/chan_summer_430.jpg', // Вид снаружи (рендер)
-    imageInterior: 'assets/chan_summer_interior.jpg', // Вид изнутри (сухой рендер)
-    livePhotos: [
-      'assets/live_1.jpg', // Установленный чан на участке
-      'assets/live_2.jpg', // Чан в работе с цитрусовым наполнением
-      'assets/live_3.jpg'  // Отдых в чане у бани на закате
-    ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана сибирской лиственницей "Стандарт"',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
-    ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь-подставка с металлическим дном',
-    specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
-      { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '48.3 мм (быстрый слив)' },
-      { name: 'Защитный экран', value: 'Экран от дымохода' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование (матовый блеск)' },
-      { name: 'Внутренняя отделка', value: 'Сибирская лиственница "Стандарт"' }
-    ]
-  },
-  {
-    id: 9,
-    name: 'Комплект «Летний» AISI 304',
-    category: 'summer',
-    steel: 'AISI 304',
-    oldPrice: 210150,
-    newPrice: 184500,
-    warranty: '15 лет',
-    lifetime: '30 лет',
-    gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '💎 Премиум сталь',
-    image: 'assets/chan_summer_304.jpg', // Реальное фото на участке
-    imageInterior: 'assets/chan_summer_interior.jpg', // Вид изнутри
-    livePhotos: [
-      'assets/live_1.jpg',
-      'assets/live_2.jpg',
-      'assets/live_3.jpg'
-    ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана сибирской лиственницей "Стандарт"',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
-    ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь-подставка с металлическим дном',
-    specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
-      { name: 'Толщина металла', value: 'Стенки 2 мм, дno 3 мм' },
-      { name: 'Сливной кран', value: '48.3 мм (быстрый слив)' },
-      { name: 'Защитный экран', value: 'Экран от дымохода' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование (матовый блеск)' },
-      { name: 'Внутренняя отделка', value: 'Сибирская лиственница "Стандарт"' }
-    ]
   }
 ];
 
@@ -620,12 +494,18 @@ function renderProducts() {
     `).join('');
 
     // Разметка характеристик
-    const specsHtml = product.specs.map(spec => `
-      <div class="spec-row">
-        <span class="spec-name">${spec.name}</span>
-        <span class="spec-val">${spec.value}</span>
-      </div>
-    `).join('');
+    const specsHtml = product.specs.map(spec => {
+      let specValue = spec.value;
+      if (spec.name === 'Материал чаши') {
+        specValue += ` <span class="steel-compare-link" data-target="faq-steel">(В чем различие?)</span>`;
+      }
+      return `
+        <div class="spec-row">
+          <span class="spec-name">${spec.name}</span>
+          <span class="spec-val">${specValue}</span>
+        </div>
+      `;
+    }).join('');
 
     // Генерация хотспотов
     let hotspotsHtml = '';
@@ -688,7 +568,7 @@ function renderProducts() {
             <i class="fa-solid fa-gift pulse"></i>
           </div>
           <div class="gift-text">
-            <strong>ПОДАРОК:</strong> ${product.gift}
+            <strong>ПОДАРОК:</strong> ${product.gift} <span class="gift-view-link">(Посмотреть фото 📷)</span>
           </div>
         </div>
         
@@ -967,6 +847,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Открытие при клике на картинку
     document.addEventListener('click', (e) => {
       const cardImg = e.target.closest('.card-gallery .card-image');
+      const certImg = e.target.closest('.certificate-card .cert-image');
+      
       if (cardImg) {
         const productCard = cardImg.closest('.product-card');
         if (productCard) {
@@ -985,17 +867,27 @@ document.addEventListener('DOMContentLoaded', () => {
             activeImageIndex = activeGalleryImages.indexOf(clickedSrc);
             if (activeImageIndex === -1) activeImageIndex = 0;
 
-            const currentSrc = activeGalleryImages[activeImageIndex];
-            if (currentSrc.toLowerCase().endsWith('.png')) {
-              lightboxImg.classList.add('is-render');
-            } else {
-              lightboxImg.classList.remove('is-render');
-            }
-            lightboxImg.src = currentSrc;
+            updateLightboxImage();
             lightboxModal.classList.add('active');
             document.body.classList.add('lightbox-open');
           }
         }
+      } else if (certImg) {
+        // Загружаем все 4 сертификата в галерею лайтбокса
+        activeGalleryImages = [
+          'assets/cert_3.jpg',
+          'assets/cert_4.jpg',
+          'assets/cert_1.jpg',
+          'assets/cert_2.jpg'
+        ];
+        
+        const clickedSrc = certImg.getAttribute('src');
+        activeImageIndex = activeGalleryImages.indexOf(clickedSrc);
+        if (activeImageIndex === -1) activeImageIndex = 0;
+
+        updateLightboxImage();
+        lightboxModal.classList.add('active');
+        document.body.classList.add('lightbox-open');
       }
     });
 
@@ -1103,4 +995,150 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  // Инициализация слайдера сертификатов
+  const certSlider = document.getElementById('certificates-slider');
+  const certDots = document.querySelectorAll('.cert-dot');
+  const certPrevBtn = document.querySelector('.cert-prev');
+  const certNextBtn = document.querySelector('.cert-next');
+  const certCards = document.querySelectorAll('.certificate-card');
+
+  if (certSlider && certCards.length > 0) {
+    let activeCertIndex = 0;
+
+    function scrollToCert(index) {
+      if (index < 0 || index >= certCards.length) return;
+      activeCertIndex = index;
+      const cardWidth = certCards[0].offsetWidth;
+      const gap = 16; // соответствует gap: 16px в CSS
+      certSlider.scrollTo({
+        left: index * (cardWidth + gap),
+        behavior: 'smooth'
+      });
+      updateCertDots(index);
+    }
+
+    function updateCertDots(index) {
+      certDots.forEach((dot, idx) => {
+        if (idx === index) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    if (certPrevBtn) {
+      certPrevBtn.addEventListener('click', () => {
+        let prevIndex = activeCertIndex - 1;
+        if (prevIndex < 0) prevIndex = certCards.length - 1; // Зацикливание
+        scrollToCert(prevIndex);
+      });
+    }
+
+    if (certNextBtn) {
+      certNextBtn.addEventListener('click', () => {
+        let nextIndex = activeCertIndex + 1;
+        if (nextIndex >= certCards.length) nextIndex = 0; // Зацикливание
+        scrollToCert(nextIndex);
+      });
+    }
+
+    // Клик по точкам
+    certDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const index = parseInt(dot.getAttribute('data-index'));
+        scrollToCert(index);
+      });
+    });
+
+    // Отслеживание скролла (для свайпов на мобильных устройствах)
+    let scrollTimeout;
+    certSlider.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const cardWidth = certCards[0].offsetWidth;
+        const gap = 16;
+        const scrollLeft = certSlider.scrollLeft;
+        const currentFloat = scrollLeft / (cardWidth + gap);
+        const index = Math.round(currentFloat);
+        if (index >= 0 && index < certCards.length && index !== activeCertIndex) {
+          activeCertIndex = index;
+          updateCertDots(index);
+        }
+      }, 100);
+    }, { passive: true });
+  }
+
+  // Обработка клика по ссылке сравнения стали
+  document.addEventListener('click', (e) => {
+    const compareLink = e.target.closest('.steel-compare-link');
+    if (compareLink) {
+      const targetId = compareLink.getAttribute('data-target');
+      const targetAccordion = document.getElementById(targetId);
+      if (targetAccordion) {
+        // Раскрываем аккордеон
+        targetAccordion.setAttribute('open', '');
+        
+        // Плавно скроллим к нему
+        targetAccordion.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+        
+        // Добавляем эффект временной подсветки
+        targetAccordion.classList.remove('flash-highlight');
+        void targetAccordion.offsetWidth; // Триггер reflow для перезапуска CSS-анимации
+        targetAccordion.classList.add('flash-highlight');
+        
+        // Удаляем класс после завершения анимации
+        setTimeout(() => {
+          targetAccordion.classList.remove('flash-highlight');
+        }, 2500);
+      }
+    }
+  });
+
+  // Инициализация модального окна подарков
+  const giftsModal = document.getElementById('gifts-modal');
+  if (giftsModal) {
+    const closeBtn = giftsModal.querySelector('.gifts-modal-close');
+    const okBtn = giftsModal.querySelector('.gifts-modal-btn');
+
+    function openGiftsModal() {
+      giftsModal.classList.add('active');
+      giftsModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open'); // Блокируем скролл фона
+    }
+
+    function closeGiftsModal() {
+      giftsModal.classList.remove('active');
+      giftsModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+    }
+
+    // Слушаем клики по ссылкам просмотра подарков
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.gift-view-link')) {
+        openGiftsModal();
+      }
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closeGiftsModal);
+    if (okBtn) okBtn.addEventListener('click', closeGiftsModal);
+
+    // Закрытие при клике по фону
+    giftsModal.addEventListener('click', (e) => {
+      if (e.target === giftsModal) {
+        closeGiftsModal();
+      }
+    });
+
+    // Закрытие по кнопке Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && giftsModal.classList.contains('active')) {
+        closeGiftsModal();
+      }
+    });
+  }
 });
