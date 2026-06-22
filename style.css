@@ -185,11 +185,14 @@ button {
 }
 
 @media (max-width: 360px) {
-  .status-text {
+  .main-header.show-mini-timer .status-text {
     display: none;
   }
   .header-badge {
-    padding: 6px;
+    padding: 4px 8px;
+  }
+  .status-text {
+    font-size: 9px;
   }
 }
 
