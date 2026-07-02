@@ -5,75 +5,6 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-1» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
-    oldPrice: 148400,
-    newPrice: 118400,
-    warranty: '2 года',
-    lifetime: '10 лет',
-    gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '🔥 Популярность',
-    image: 'assets/chan_uch1_render.png',
-    imageInterior: 'assets/chan_uch1_interior.jpg',
-    livePhotos: [
-      'assets/chan_uch1.jpg',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_uch1_workshop.jpg',
-      'assets/chan_uch1_live_1.jpg',
-      'assets/chan_uch1_live_2.jpg',
-      'assets/chan_uch1_live_3.jpg',
-      'assets/chan_uch1_live_4.jpg'
-    ],
-    ladder: 'Приставная лестница из лиственницы с поручнями',
-    stove: 'Приварная печь из стали 09г2с (3 мм) с подставкой',
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 41,
-        y: 58,
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 52,
-        y: 82,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 72,
-        y: 42,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта С',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
-    specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '95.5 см' },
-      { name: 'Рабочий объем', value: '1250 литров' },
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
-      { name: 'Толщина металла', value: 'Стенки 1.5 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '42 мм (1 1/4 дюйма) с шаровым краном' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта «С»' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Комплект «УЧ-2» AISI 430',
-    category: 'summer',
-    steel: 'AISI 430',
     oldPrice: 156000,
     newPrice: 126000,
     warranty: '2 года',
@@ -140,8 +71,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 3,
-    name: 'Комплект «УЧ-3» AISI 430',
+    id: 2,
+    name: 'Комплект «УЧ-2» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     oldPrice: 175000,
@@ -208,8 +139,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 4,
-    name: 'Комплект «УЧ-4» AISI 304',
+    id: 3,
+    name: 'Комплект «УЧ-3» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
     oldPrice: 198000,
@@ -279,8 +210,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 5,
-    name: 'Комплект «УЧ-5» AISI 430',
+    id: 4,
+    name: 'Комплект «УЧ-4» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     oldPrice: 202000,
@@ -354,8 +285,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 6,
-    name: 'Комплект «УЧ-6» AISI 430',
+    id: 5,
+    name: 'Комплект «УЧ-5» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     oldPrice: 204900,
@@ -429,8 +360,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 7,
-    name: 'Комплект «УЧ-7» AISI 304',
+    id: 6,
+    name: 'Комплект «УЧ-6» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
     oldPrice: 230900,
