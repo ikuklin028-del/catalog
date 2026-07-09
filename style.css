@@ -2161,6 +2161,378 @@ body.lightbox-open {
   }
 }
 
+/* ==========================================================================
+   FORTUNE WHEEL WIDGET & MODAL
+   ========================================================================== */
+.fortune-widget {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--accent-fire), #b3390f);
+  border: 2px solid var(--primary-wood);
+  border-radius: 50%;
+  box-shadow: var(--shadow-lg), var(--glow-fire), 0 0 15px rgba(212, 163, 115, 0.4);
+  z-index: 199;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: fortune-wiggle 6s infinite;
+}
+
+.fortune-widget:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 0 25px rgba(230, 95, 43, 0.8), 0 0 20px rgba(212, 163, 115, 0.6);
+}
+
+.fortune-widget-wheel {
+  font-size: 32px;
+  color: var(--text-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes spin-slow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fortune-wiggle {
+  0%, 90%, 100% { transform: scale(1); }
+  92% { transform: scale(1.1) rotate(-15deg); }
+  94% { transform: scale(1.1) rotate(15deg); }
+  96% { transform: scale(1.1) rotate(-10deg); }
+  98% { transform: scale(1.1) rotate(10deg); }
+}
+
+.fortune-widget-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--accent-discount);
+  color: var(--text-white);
+  font-size: 9px;
+  font-weight: 800;
+  padding: 4px 6px;
+  border-radius: 10px;
+  border: 1px solid var(--text-white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Modal */
+.fortune-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(6, 17, 11, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.fortune-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fortune-modal-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  border-radius: var(--card-radius);
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  padding: 30px;
+  box-shadow: var(--shadow-lg), var(--glow-wood);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.fortune-modal.active .fortune-modal-container {
+  transform: translateY(0);
+}
+
+.fortune-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.fortune-modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-white);
+}
+
+.fortune-modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.fortune-modal-logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.fortune-modal-logo-spin {
+  font-size: 48px;
+  color: var(--accent-fire);
+  animation: spin-slow 8s linear infinite;
+  text-shadow: 0 0 15px rgba(230, 95, 43, 0.4);
+}
+
+.fortune-modal-header h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-wood);
+  margin-bottom: 8px;
+}
+
+.fortune-modal-intro {
+  font-size: 13px;
+  color: var(--text-white);
+  opacity: 0.9;
+}
+
+/* Interactive Wheel styles */
+.wheel-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto 25px auto;
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 163, 115, 0.2);
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 28px;
+  background-color: var(--accent-fire);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  z-index: 10;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  transform-origin: 50% 0;
+  transition: transform 0.1s ease;
+}
+
+.wheel-disk {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid var(--border-glow);
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+  overflow: hidden;
+  position: relative;
+  transform: rotate(0deg);
+  background: var(--bg-card);
+}
+
+.wheel-disk svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* SVG text styling inside wheel */
+.wheel-disk text {
+  font-family: 'Manrope', sans-serif;
+  font-size: 8px;
+  font-weight: 800;
+  fill: #ffffff;
+  text-anchor: middle;
+  letter-spacing: 0.3px;
+  filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.8));
+}
+
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: var(--bg-card);
+  border: 4px solid var(--border-glow);
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: var(--shadow-md), 0 0 10px rgba(212, 163, 115, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wheel-center-dot {
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, var(--accent-fire), #b3390f);
+  border-radius: 50%;
+  box-shadow: var(--glow-fire);
+}
+
+/* Win Screen */
+.fortune-win-screen {
+  text-align: center;
+  padding: 10px 0;
+  animation: win-screen-appear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes win-screen-appear {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.win-icon-wrapper {
+  font-size: 52px;
+  color: var(--accent-discount);
+  margin-bottom: 15px;
+  text-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s infinite;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.win-intro {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.won-prize-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(212, 163, 115, 0.2), rgba(212, 163, 115, 0.05));
+  border: 2px solid var(--primary-wood);
+  color: var(--text-wood);
+  font-size: 20px;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), var(--glow-wood);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.win-desc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-white);
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+.fortune-modal-footer {
+  text-align: center;
+}
+
+.fortune-modal-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent-fire), #b3390f);
+  color: var(--text-white);
+  font-weight: 700;
+  border-radius: var(--button-radius);
+  padding: 14px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  box-shadow: var(--shadow-md), var(--glow-fire);
+  border: none;
+  cursor: pointer;
+}
+
+.fortune-modal-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ff7e47, var(--accent-fire));
+  box-shadow: 0 6px 20px rgba(230, 95, 43, 0.5);
+}
+
+.fortune-modal-btn i {
+  font-size: 18px;
+}
+
+.btn-claim-prize {
+  background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4) !important;
+}
+
+.btn-claim-prize:hover {
+  background: linear-gradient(135deg, #40d47e, #2ecc71) !important;
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6) !important;
+}
+
+.fortune-modal-note {
+  margin-top: 10px;
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .fortune-widget {
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+  }
+  
+  .fortune-widget-wheel {
+    font-size: 28px;
+  }
+  
+  .fortune-modal-container {
+    padding: 24px 20px;
+  }
+  
+  .fortune-modal-header h3 {
+    font-size: 20px;
+  }
+}
+
 /* Prefers Reduced Motion settings */
 @media (prefers-reduced-motion: reduce) {
   .pulse, .status-dot, .icon-pulse, .timer-divider, .hotspot-btn, .play-btn-pulse {

@@ -322,6 +322,67 @@
     </div>
   </div>
 
+  <!-- Floating Fortune Wheel Widget -->
+  <div class="fortune-widget" id="fortune-widget" role="button" aria-label="Открыть колесо фортуны" title="Выиграть подарок!">
+    <div class="fortune-widget-wheel">
+      <i class="fa-solid fa-dharmachakra animate-spin-slow"></i>
+    </div>
+    <div class="fortune-widget-badge">Подарок!</div>
+  </div>
+
+  <!-- Fortune Wheel Modal -->
+  <div id="fortune-modal" class="fortune-modal" aria-hidden="true" role="dialog">
+    <div class="fortune-modal-container">
+      <button class="fortune-modal-close" id="fortune-modal-close" aria-label="Закрыть"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="fortune-modal-header">
+        <div class="fortune-modal-logo-container">
+          <div class="fortune-modal-logo-spin">
+            <i class="fa-solid fa-dharmachakra"></i>
+          </div>
+        </div>
+        <h3>Колесо Фортуны 🎡</h3>
+        <p class="fortune-modal-intro" id="fortune-modal-intro">Выиграйте один из гарантированных подарков к вашему банному чану!</p>
+      </div>
+
+      <!-- Игровая зона рулетки -->
+      <div id="fortune-game-zone">
+        <div class="wheel-wrapper">
+          <div class="wheel-pointer"></div>
+          <div class="wheel-disk" id="wheel-disk">
+            <!-- SVG-диск будет сгенерирован динамически через JS -->
+          </div>
+          <div class="wheel-center">
+            <div class="wheel-center-dot"></div>
+          </div>
+        </div>
+        
+        <div class="fortune-modal-footer">
+          <button class="fortune-modal-btn btn-spin-wheel" id="btn-spin-wheel">Испытать удачу 🎡</button>
+          <p class="fortune-modal-note">* Подарки выдаются при оформлении заказа до конца недели</p>
+        </div>
+      </div>
+
+      <!-- Экран выигрыша (скрыт по умолчанию) -->
+      <div id="fortune-win-screen" class="fortune-win-screen" style="display: none;">
+        <div class="win-icon-wrapper">
+          <i class="fa-solid fa-gift animate-bounce-slow"></i>
+        </div>
+        <h3>Поздравляем! 🎉</h3>
+        <p class="win-intro">Вы выиграли отличный подарок к вашему банному чану:</p>
+        <div class="won-prize-badge" id="won-prize-badge">Название приза</div>
+        <p class="win-desc">Мы зарезервировали этот подарок за вашим устройством. Нажмите кнопку ниже, чтобы запустить чат-бота в мессенджере MAX и забрать подарок.</p>
+        
+        <div class="fortune-modal-footer">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="fortune-modal-btn btn-claim-prize" id="btn-claim-prize">
+            <i class="fa-solid fa-paper-plane"></i> Забрать подарок в боте MAX
+          </a>
+          <p class="fortune-modal-note">* Для получения приза бот должен быть запущен</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Web App Logic -->
   <script src="app.js?v=1.1"></script>
 </body>
