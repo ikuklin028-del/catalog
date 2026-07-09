@@ -792,10 +792,47 @@ function initCountdownTimer() {
   }
 }
 
+function initVideoPlayer() {
+  const cover = document.getElementById('video-cover');
+  const playBtn = document.getElementById('video-play-btn');
+  const iframeContainer = document.getElementById('video-iframe-container');
+  
+  if (!cover || !iframeContainer) return;
+  
+  const startVideo = () => {
+    // Вставляем iframe с видео из VK
+    const videoUrl = 'https://vk.com/video_ext.php?oid=-229886352&id=456239017&hash=21f06a7ad90fc4be&autoplay=1';
+    
+    iframeContainer.innerHTML = `
+      <iframe 
+        src="${videoUrl}" 
+        width="100%" 
+        height="100%" 
+        allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" 
+        frameborder="0" 
+        allowfullscreen
+      ></iframe>
+    `;
+    
+    // Скрываем обложку с анимацией
+    cover.style.opacity = '0';
+    setTimeout(() => {
+      cover.style.display = 'none';
+    }, 400);
+  };
+  
+  cover.addEventListener('click', startVideo);
+  playBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    startVideo();
+  });
+}
+
 // ИНИЦИАЛИЗАЦИЯ
 document.addEventListener('DOMContentLoaded', () => {
   initCountdownTimer();
   renderProducts();
+  initVideoPlayer();
 
   // Инициализация полноэкранного просмотра фото (Lightbox)
   const lightboxModal = document.getElementById('lightbox-modal');
