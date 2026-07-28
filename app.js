@@ -5,6 +5,12 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-1» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
+    stock: 2,
+    totalStock: 5,
+    urgentNotice: {
+      title: 'ПОСЛЕДНИЙ ДЕНЬ В ПРОДАЖЕ!',
+      text: 'Сегодня комплект снимается с продажи. Успейте оформить заказ!'
+    },
     oldPrice: 166000,
     newPrice: 136000,
     warranty: '2 года',
@@ -75,6 +81,8 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-2» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
+    stock: 3,
+    totalStock: 6,
     oldPrice: 185000,
     newPrice: 158400,
     warranty: '7 лет',
@@ -143,6 +151,8 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-3» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
+    stock: 1,
+    totalStock: 5,
     oldPrice: 208000,
     newPrice: 183900,
     warranty: '15 лет',
@@ -214,6 +224,8 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-4» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
+    stock: 4,
+    totalStock: 7,
     oldPrice: 212000,
     newPrice: 180450,
     warranty: '7 лет',
@@ -289,6 +301,8 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-5» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
+    stock: 2,
+    totalStock: 5,
     oldPrice: 214900,
     newPrice: 177050,
     warranty: '7 лет',
@@ -364,6 +378,8 @@ const PRODUCTS = [
     name: 'Комплект «УЧ-6» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
+    stock: 3,
+    totalStock: 6,
     oldPrice: 240900,
     newPrice: 202550,
     warranty: '15 лет',
@@ -552,6 +568,15 @@ function renderProducts() {
       </div>
       
       <div class="card-body">
+        ${product.urgentNotice ? `
+          <div class="urgent-notice-box">
+            <div class="urgent-notice-icon">🚨</div>
+            <div class="urgent-notice-content">
+              <div class="urgent-notice-title">${product.urgentNotice.title}</div>
+              <div class="urgent-notice-text">${product.urgentNotice.text}</div>
+            </div>
+          </div>
+        ` : ''}
         <h3 class="card-title">${product.name}</h3>
         
         <div class="card-gift-box">
@@ -570,13 +595,24 @@ function renderProducts() {
               <span class="price-val-old">${formatPrice(product.oldPrice)}</span>
             </div>
             <div class="price-new">
-              <span class="price-label">НОВАЯ ЦЕНА:</span>
+              <span class="price-label">ЦЕНА СО СКИДКОЙ:</span>
               <span class="price-val-new">${formatPrice(product.newPrice)}</span>
             </div>
           </div>
           <div class="price-discount">
             <i class="fa-solid fa-circle-check"></i> Ваша экономия: <strong>${formatPrice(discount)}</strong>
           </div>
+          ${product.stock ? `
+            <div class="price-stock">
+              <div class="stock-info">
+                <span class="stock-label"><i class="fa-solid fa-fire-flame-curved icon-pulse-red"></i> Осталось по акции:</span>
+                <span class="stock-val"><strong>${product.stock} шт.</strong></span>
+              </div>
+              <div class="stock-bar-track">
+                <div class="stock-bar-fill" style="width: ${Math.min(100, Math.max(15, (product.stock / (product.totalStock || 5)) * 100))}%;"></div>
+              </div>
+            </div>
+          ` : ''}
         </div>
 
         <!-- Details Accordion -->
