@@ -1,84 +1,8 @@
-// БАЗА ДАННЫХ (Один рабочий комплект для доработки)
+// БАЗА ДАННЫХ
 const PRODUCTS = [
   {
     id: 1,
     name: 'Комплект «УЧ-1» AISI 430',
-    category: 'summer',
-    steel: 'AISI 430',
-    stock: 2,
-    totalStock: 5,
-    urgentNotice: {
-      title: 'ПОСЛЕДНИЙ ДЕНЬ В ПРОДАЖЕ!',
-      text: 'Сегодня комплект снимается с продажи. Успейте оформить заказ!'
-    },
-    oldPrice: 166000,
-    newPrice: 136000,
-    warranty: '2 года',
-    lifetime: '10 лет',
-    gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '🔥 Популярность',
-    image: 'assets/chan_uch2_render.png',
-    imageInterior: 'assets/chan_uch1_interior.jpg',
-    livePhotos: [
-      'assets/chan_uch2_main.jpg',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_bright_banner.jpg',
-      'assets/chan_family_live.jpg',
-      'assets/chan_uch2_live_1.jpg',
-      'assets/chan_uch2_live_2.jpg',
-      'assets/chan_uch2_live_3.jpg',
-      'assets/chan_uch2_live_4.jpg'
-    ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 41,
-        y: 58,
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 52,
-        y: 82,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 72,
-        y: 42,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта С',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
-    ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь ветрозащита (без дна)',
-    specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '95.5 см' },
-      { name: 'Рабочий объем', value: '1250 литров' },
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
-      { name: 'Толщина металла', value: 'Стенки 1.5 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '42 мм (1 1/4 дюйма) с шаровым краном' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта «С»' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Комплект «УЧ-2» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     stock: 3,
@@ -147,8 +71,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 3,
-    name: 'Комплект «УЧ-3» AISI 304',
+    id: 2,
+    name: 'Комплект «УЧ-2» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
     stock: 1,
@@ -189,7 +113,7 @@ const PRODUCTS = [
         slideIndex: 1,
         x: 50,
         y: 72,
-        title: 'Прочное дno с подставкой для ног',
+        title: 'Прочное дно с подставкой для ног',
         text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
         image: 'assets/footrest.png'
       },
@@ -220,8 +144,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 4,
-    name: 'Комплект «УЧ-4» AISI 430',
+    id: 3,
+    name: 'Комплект «УЧ-3» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     stock: 4,
@@ -297,8 +221,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 5,
-    name: 'Комплект «УЧ-5» AISI 430',
+    id: 4,
+    name: 'Комплект «УЧ-4» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     stock: 2,
@@ -374,8 +298,8 @@ const PRODUCTS = [
     ]
   },
   {
-    id: 6,
-    name: 'Комплект «УЧ-6» AISI 304',
+    id: 5,
+    name: 'Комплект «УЧ-5» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
     stock: 3,
@@ -454,7 +378,6 @@ const PRODUCTS = [
   }
 ];
 
-// Функция форматирования чисел в валюту рублей
 function formatPrice(number) {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
