@@ -23,6 +23,7 @@ const SMALL_PRODUCTS = [
       'assets/chan_uch1_spec_trim.png'
     ],
     hotspots: [],
+    stove: 'Ветрозащита (без дна)',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
@@ -30,7 +31,7 @@ const SMALL_PRODUCTS = [
       { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
       { name: 'Диаметр чаши', value: '180 см' },
       { name: 'Вместимость', value: 'На 3 человека' },
-      { name: 'Тип подогрева', value: 'Ветрозащита' },
+      { name: 'Тип подогрева', value: 'Ветрозащита (без дна)' },
       { name: 'Рабочий объем', value: '950 литров' },
       { name: 'Глубина чаши', value: '85 см' },
       { name: 'Срок службы', value: '15 лет' },
@@ -59,6 +60,8 @@ const SMALL_PRODUCTS = [
       'assets/chan_uch2_spec_chimney.png?v=11'
     ],
     hotspots: [],
+    ladder: 'Приставная деревянная лестница',
+    stove: 'Печь-подставка с металлическим дном',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
@@ -70,7 +73,7 @@ const SMALL_PRODUCTS = [
       { name: 'Рабочий объем', value: '950 литров' },
       { name: 'Глубина чаши', value: '85 см' },
       { name: 'Срок службы', value: '15 лет' },
-      { name: 'Опции комплекта', value: 'Деревянная лестница, Комплект дымохода, 2.5м' }
+      { name: 'Опции комплекта', value: 'Деревянная лестница, Комплект дымохода 2.5м' }
     ]
   }
 ];
