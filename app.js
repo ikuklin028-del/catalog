@@ -110,7 +110,7 @@ const PREMIUM_PRODUCTS = [
     ],
     hotspots: [],
     ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь с водяной рубашкой + сэндвич-дымоход 3 м',
+    stove: 'Печь с водяной рубашкой',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
@@ -190,7 +190,7 @@ const PRODUCTS = [
     ],
     hotspots: [],
     ladder: 'Приставная лестница из лиственницы с поручнями',
-    stove: 'Печь-подставка с металлическим дном + дымоход 2.5 м',
+    stove: 'Печь-подставка с металлическим дном',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
@@ -230,7 +230,7 @@ const PRODUCTS = [
     ],
     hotspots: [],
     ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь-подставка с металлическим дном + дымоход 2.5 м',
+    stove: 'Печь-подставка с металлическим дном',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
@@ -270,7 +270,7 @@ const PRODUCTS = [
     ],
     hotspots: [],
     ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь-подставка с металлическим дном + дымоход 2.5 м',
+    stove: 'Печь-подставка с металлическим дном',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
@@ -311,7 +311,7 @@ const PRODUCTS = [
     ],
     hotspots: [],
     ladder: 'Металлическая лестница с площадкой и поручнем',
-    stove: 'Печь с водяной рубашкой + дымоход 2.5 м',
+    stove: 'Печь с водяной рубашкой',
     hideEquipmentHighlight: true,
     specs: [
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
@@ -359,23 +359,25 @@ function buildChecklistItemsHtml(product) {
   const items = [];
   
   if (product.stoveTag) {
-    items.push(`Печь: <strong>${product.stoveTag}</strong>`);
+    items.push(`<strong>${product.stoveTag}</strong>`);
   } else if (product.stove) {
-    items.push(`Печь: <strong>${product.stove}</strong>`);
+    items.push(`<strong>${product.stove}</strong>`);
   }
   
   if (product.ladder) {
-    items.push(`Лестница: <strong>${product.ladder}</strong>`);
+    items.push(`<strong>${product.ladder}</strong>`);
   }
   
   const optionsSpec = product.specs ? product.specs.find(s => s.name === 'Опции комплекта') : null;
   if (optionsSpec && optionsSpec.value) {
-    const opts = optionsSpec.value.split(',').map(o => o.trim());
+    const opts = optionsSpec.value.split(/[,;]/).map(o => o.trim()).filter(Boolean);
     opts.forEach(opt => {
       const lower = opt.toLowerCase();
-      if (!lower.includes('печь') && !lower.includes('лестниц') && !items.some(i => i.toLowerCase().includes(lower))) {
-        items.push(opt);
-      }
+      if (lower.startsWith('без ')) return;
+      if (lower.includes('печь') || lower.includes('лестниц')) return;
+      if (!lower.includes('защита') && lower.includes('дым') && items.some(i => i.toLowerCase().includes('дым') && !i.toLowerCase().includes('защита'))) return;
+      if (items.some(i => i.toLowerCase().includes(lower))) return;
+      items.push(opt);
     });
   }
 
