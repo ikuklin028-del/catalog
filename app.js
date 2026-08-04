@@ -1,8 +1,134 @@
+// Состояние выбранного фильтра по вместимости ('small', 'medium', 'large')
+let currentCapacityFilter = 'medium';
+
+// Карточки для категории "Малые чаны (2–3 человека)"
+const SMALL_PRODUCTS = [
+  {
+    id: 'small-1',
+    name: 'Комплект «УЧ-1» AISI 430',
+    category: 'small',
+    steel: 'AISI 430',
+    stock: 3,
+    totalStock: 6,
+    oldPrice: 143000,
+    newPrice: 118500,
+    warranty: '7 лет',
+    lifetime: '15 лет',
+    gift: 'Тканевый чехол + подсветка в подарок 🎁',
+    badge: '🔥 Эконом вариант',
+    image: 'assets/chan_small_uch1_render.png?v=26',
+    imageInterior: null,
+    livePhotos: [
+      'assets/chan_uch1_spec_wind.png',
+      'assets/chan_uch1_spec_trim.png'
+    ],
+    hotspots: [],
+    hideEquipmentHighlight: true,
+    specs: [
+      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
+      { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '180 см' },
+      { name: 'Вместимость', value: 'На 3 человека' },
+      { name: 'Тип подогрева', value: 'Ветрозащита' },
+      { name: 'Рабочий объем', value: '950 литров' },
+      { name: 'Глубина чаши', value: '85 см' },
+      { name: 'Срок службы', value: '15 лет' },
+      { name: 'Опции комплекта', value: 'Без лестницы; Без дымохода' }
+    ]
+  },
+  {
+    id: 'small-2',
+    name: 'Комплект «УЧ-2» AISI 430',
+    category: 'small',
+    steel: 'AISI 430',
+    stock: 4,
+    totalStock: 7,
+    oldPrice: 175000,
+    newPrice: 148400,
+    warranty: '7 лет',
+    lifetime: '15 лет',
+    gift: 'Тканевый чехол + подсветка в подарок 🎁',
+    badge: '⭐ Оптимальный выбор',
+    image: 'assets/chan_small_uch2_render.png?v=31',
+    imageInterior: null,
+    livePhotos: [
+      'assets/chan_uch2_spec_stove.png?v=11',
+      'assets/chan_uch2_spec_trim.png?v=11',
+      'assets/chan_uch2_spec_ladder.png?v=11',
+      'assets/chan_uch2_spec_chimney.png?v=11'
+    ],
+    hotspots: [],
+    hideEquipmentHighlight: true,
+    specs: [
+      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
+      { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '180 см' },
+      { name: 'Вместимость', value: 'На 3 человека' },
+      { name: 'Тип подогрева', value: 'Печь-подставка' },
+      { name: 'Рабочий объем', value: '950 литров' },
+      { name: 'Глубина чаши', value: '85 см' },
+      { name: 'Срок службы', value: '15 лет' },
+      { name: 'Опции комплекта', value: 'Деревянная лестница, Комплект дымохода, 2.5м' }
+    ]
+  }
+];
+
+// Заявочные карточки и товары для категории Премиум SPA
+const PREMIUM_PRODUCTS = [
+  {
+    id: 'premium-1',
+    name: 'Комплект «УЧ-8» AISI 304',
+    category: 'large',
+    capacityText: 'до 6 чел.',
+    steel: 'AISI 304',
+    stock: 2,
+    totalStock: 5,
+    oldPrice: 505150,
+    newPrice: 457150,
+    warranty: '15 лет',
+    lifetime: '30 лет',
+    stoveTag: 'Печь с водяной рубашкой',
+    gift: 'Тканевый чехол + подсветка в подарок 🎁',
+    badge: '👑 Премиум SPA',
+    image: 'assets/chan_uch7_render.png?v=35',
+    imageInterior: null,
+    livePhotos: [
+      'assets/chan_uch8_spec_water_jacket.png',
+      'assets/chan_uch8_spec_trim.png',
+      'assets/chan_uch8_spec_table.png',
+      'assets/chan_uch8_spec_ladder.png',
+      'assets/chan_uch8_spec_chimney_sandwich.png',
+      'assets/chan_uch8_spec_jacuzzi.png',
+      'assets/chan_uch8_spec_lighting.png',
+      'assets/chan_uch8_spec_exterior_trim.png',
+      'assets/chan_uch8_spec_cover.png'
+    ],
+    hotspots: [],
+    ladder: 'Металлическая лестница с площадкой и поручнем',
+    stove: 'Печь с водяной рубашкой + сэндвич-дымоход 3 м',
+    hideEquipmentHighlight: true,
+    specs: [
+      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
+      { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '200 см' },
+      { name: 'Вместимость', value: 'До 6 человек' },
+      { name: 'Тип подогрева', value: 'Печь с водяной рубашкой' },
+      { name: 'Рабочий объем', value: '1250 литров' },
+      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Срок службы', value: '30 лет' },
+      { name: 'Опции комплекта', value: 'Термокрышка, Внутренняя подсветка, Центральный столик, Комплект джакузи, Внешняя отделка, Дымоход из сэндвич трубы 3 м, Металлическая лестница' }
+    ]
+  }
+];
+
 // БАЗА ДАННЫХ
 const PRODUCTS = [
   {
     id: 1,
-    name: 'Комплект «УЧ-1» AISI 430',
+    name: 'Комплект «УЧ-3» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     stock: 3,
@@ -13,66 +139,34 @@ const PRODUCTS = [
     lifetime: '15 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥 Популярность',
-    image: 'assets/chan_uch3_render.png',
-    imageInterior: 'assets/chan_uch3_interior.jpg',
+    image: 'assets/chan_uch3_render.png?v=30',
+    imageInterior: null,
     livePhotos: [
-      'assets/chan_uch3_live.jpg',
-      'assets/chan_safety_banner.jpg',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_hotel_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_summer_3_4_live.jpg'
+      'assets/chan_uch2_spec_stove.png?v=11',
+      'assets/chan_uch2_spec_trim.png?v=11',
+      'assets/chan_uch2_spec_ladder.png?v=11',
+      'assets/chan_uch2_spec_chimney.png?v=11'
     ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта А',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
+    hotspots: [],
     ladder: 'Приставная лестница из лиственницы с поручнями',
     stove: 'Печь-подставка с металлическим дном',
+    hideEquipmentHighlight: true,
     specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
-      { name: 'Рабочий объем', value: '1250 литров' },
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '50 мм (быстрый слив)' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование (матовый блеск)' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта А ("Стандарт")' }
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '200 см' },
+      { name: 'Вместимость', value: 'До 6 человек' },
+      { name: 'Тип подогрева', value: 'Печь-подставка' },
+      { name: 'Рабочий объем', value: '1250 литров' },
+      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Срок службы', value: '15 лет' },
+      { name: 'Опции комплекта', value: 'Деревянная лестница, Дымоход 2.5м' }
     ]
   },
   {
     id: 2,
-    name: 'Комплект «УЧ-2» AISI 304',
+    name: 'Комплект «УЧ-4» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
     stock: 1,
@@ -83,146 +177,34 @@ const PRODUCTS = [
     lifetime: '30 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥 Популярность',
-    image: 'assets/chan_uch3_render.png',
-    imageInterior: 'assets/chan_uch3_interior.jpg',
+    image: 'assets/chan_uch3_render.png?v=30',
+    imageInterior: null,
     livePhotos: [
-      'assets/chan_uch3_live.jpg',
-      'assets/chan_safety_banner.jpg',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_hotel_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_bright_banner.jpg',
-      'assets/chan_family_live.jpg',
-      'assets/chan_summer_3_4_live.jpg'
+      'assets/chan_uch2_spec_stove.png?v=11',
+      'assets/chan_uch2_spec_trim.png?v=11',
+      'assets/chan_uch2_spec_ladder.png?v=11',
+      'assets/chan_uch2_spec_chimney.png?v=11'
     ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта А',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
+    hotspots: [],
     ladder: 'Приставная лестница из лиственницы с поручнями',
     stove: 'Печь-подставка с металлическим дном + дымоход 2.5 м',
+    hideEquipmentHighlight: true,
     specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
-      { name: 'Рабочий объем', value: '1250 литров' },
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '50 мм (быстрый слив)' },
-      { name: 'Дымоход', value: 'Комплект дымохода 2.5 м из нерж. стали' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта А ("Стандарт")' }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Комплект «УЧ-3» AISI 430',
-    category: 'summer',
-    steel: 'AISI 430',
-    stock: 4,
-    totalStock: 7,
-    oldPrice: 212000,
-    newPrice: 180450,
-    warranty: '7 лет',
-    lifetime: '15 лет',
-    gift: 'Тканевый чехол + подсветка в подарок 🎁',
-    badge: '🔥🔥 Популярность',
-    image: 'assets/chan_uch5_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
-    livePhotos: [
-      'assets/chan_uch5_live_people.jpg',
-      'assets/chan_safety_banner.jpg',
-      'assets/chan_cover_banner.png',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_hotel_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_uch5_live_woman.jpg'
-    ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта А',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
-    ladder: 'Приставная лестница из лиственницы с поручнями',
-    stove: 'Печь ветрозащита с панорамной дверцей (без дна) + дымоход 2.5 м',
-    cover: 'Термокрышка (оксфорд, пенопласт)',
-    screen: 'Защитный экран от дымохода',
-    specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '200 см' },
+      { name: 'Вместимость', value: 'До 6 человек' },
+      { name: 'Тип подогрева', value: 'Печь-подставка' },
       { name: 'Рабочий объем', value: '1250 литров' },
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
-      { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '50 мм (быстрый слив)' },
-      { name: 'Дымоход', value: 'Комплект дымохода 2.5 м из нерж. стали' },
-      { name: 'Защитный экран', value: 'Защитный экран от дымохода' },
-      { name: 'Термокрышка', value: 'Термокрышка (оксфорд, пенопласт)' },
-      { name: 'Термометр', value: 'Водяной термометр' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта А ("Стандарт")' }
+      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Срок службы', value: '30 лет' },
+      { name: 'Опции комплекта', value: 'Деревянная лестница, Дымоход 2.5м' }
     ]
   },
   {
     id: 4,
-    name: 'Комплект «УЧ-4» AISI 430',
+    name: 'Комплект «УЧ-5» AISI 430',
     category: 'summer',
     steel: 'AISI 430',
     stock: 2,
@@ -234,72 +216,35 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
     image: 'assets/chan_uch6_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
+    imageInterior: null,
     livePhotos: [
-      'assets/chan_summer_430.jpg',
-      'assets/chan_safety_banner.jpg',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_hotel_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_summer_interior_live.jpg',
-      'assets/chan_summer_live_night.jpg',
-      'assets/chan_summer_live_backyard.jpg',
-      'assets/chan_summer_live_woman.jpg',
-      'assets/chan_summer_live_aframe.jpg'
+      'assets/chan_uch2_spec_stove.png?v=11',
+      'assets/chan_uch2_spec_trim.png?v=11',
+      'assets/chan_uch5_spec_table.png?v=12',
+      'assets/chan_uch5_spec_metal_ladder.png?v=11',
+      'assets/chan_uch2_spec_chimney.png?v=11',
+      'assets/chan_uch7_spec_chimney_guard.png'
     ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта А',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
+    hotspots: [],
     ladder: 'Металлическая лестница с площадкой и поручнем',
     stove: 'Печь-подставка с металлическим дном + дымоход 2.5 м',
+    hideEquipmentHighlight: true,
     specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
-      { name: 'Рабочий объем', value: '1250 литров' },
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 430' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '50 мм (быстрый слив)' },
-      { name: 'Дымоход', value: 'Комплект дымохода 2.5 м из нерж. стали' },
-      { name: 'Защитный экран', value: 'Защитный экран от дымохода' },
-      { name: 'Столик', value: 'Центральный столик' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта А ("Стандарт")' }
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '200 см' },
+      { name: 'Вместимость', value: 'До 6 человек' },
+      { name: 'Тип подогрева', value: 'Печь-подставка' },
+      { name: 'Рабочий объем', value: '1250 литров' },
+      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Срок службы', value: '15 лет' },
+      { name: 'Опции комплекта', value: 'Металлическая лестница с подиумом, Дымоход 2.5м, Защита дымохода, Центральный столик' }
     ]
   },
   {
     id: 5,
-    name: 'Комплект «УЧ-5» AISI 304',
+    name: 'Комплект «УЧ-6» AISI 304',
     category: 'summer',
     steel: 'AISI 304',
     stock: 3,
@@ -311,69 +256,71 @@ const PRODUCTS = [
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
     image: 'assets/chan_uch6_render.png',
-    imageInterior: 'assets/chan_summer_interior.jpg',
+    imageInterior: null,
     livePhotos: [
-      'assets/chan_summer_304.jpg',
-      'assets/chan_safety_banner.jpg',
-      'assets/chan_thermal_banner.jpg',
-      'assets/chan_hotel_banner.jpg',
-      'assets/chan_spa_banner.jpg',
-      'assets/chan_pine_banner.jpg',
-      'assets/chan_delivery_banner.jpg',
-      'assets/chan_bright_banner.jpg',
-      'assets/chan_family_live.jpg',
-      'assets/chan_summer_interior_live.jpg',
-      'assets/chan_summer_live_night.jpg',
-      'assets/chan_summer_live_backyard.jpg',
-      'assets/chan_summer_live_woman.jpg',
-      'assets/chan_summer_live_aframe.jpg'
+      'assets/chan_uch2_spec_stove.png?v=11',
+      'assets/chan_uch2_spec_trim.png?v=11',
+      'assets/chan_uch5_spec_table.png?v=12',
+      'assets/chan_uch5_spec_metal_ladder.png?v=11',
+      'assets/chan_uch2_spec_chimney.png?v=11',
+      'assets/chan_uch7_spec_chimney_guard.png'
     ],
-    hotspots: [
-      {
-        id: 'seam',
-        slideIndex: 1,
-        x: 42,
-        y: 40,
-        align: 'left',
-        title: 'Сварные швы зачищены и безопасны для купающихся',
-        text: 'Мы тщательно зачищаем сварные швы и доводим их до гладкости. Можно не беспокоиться о порезах и травмах во время купания.',
-        image: 'assets/weld_seam.png'
-      },
-      {
-        id: 'footrest',
-        slideIndex: 1,
-        x: 50,
-        y: 72,
-        title: 'Прочное дно с подставкой для ног',
-        text: 'Дно имеет толщину 3мм, не "гуляет" под весом. Установлена подставка для ног, которая скрывает слив и защищает ноги от нагретого металла.',
-        image: 'assets/footrest.png'
-      },
-      {
-        id: 'lining',
-        slideIndex: 1,
-        x: 64,
-        y: 27,
-        align: 'right',
-        title: 'Аккуратная отделка чана лиственницей сорта А',
-        text: 'Все деревянные элементы обработаны тонирующей антисептической пропиткой, защищающей от плесени и гниения.',
-        image: 'assets/lining.png'
-      }
-    ],
+    hotspots: [],
     ladder: 'Металлическая лестница с площадкой и поручнем',
     stove: 'Печь-подставка с металлическим дном + дымоход 2.5 м',
+    hideEquipmentHighlight: true,
     specs: [
-      { name: 'Диаметр чаши', value: '200 см (до 6 человек)' },
-      { name: 'Глубина чаши', value: '97 см' },
-      { name: 'Рабочий объем', value: '1250 литров' },
       { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
-      { name: 'Сливной кран', value: '50 мм (быстрый слив)' },
-      { name: 'Дымоход', value: 'Комплект дымохода 2.5 м из нерж. стали' },
-      { name: 'Защитный экран', value: 'Защитный экран от дымохода' },
-      { name: 'Столик', value: 'Центральный столик' },
-      { name: 'Обработка швов', value: 'Электрохимическая пассивация' },
-      { name: 'Поверхность', value: 'Сатинирование внутренней поверхности' },
-      { name: 'Внутренняя отделка', value: 'Лиственница сорта А ("Стандарт")' }
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '200 см' },
+      { name: 'Вместимость', value: 'До 6 человек' },
+      { name: 'Тип подогрева', value: 'Печь-подставка' },
+      { name: 'Рабочий объем', value: '1250 литров' },
+      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Срок службы', value: '30 лет' },
+      { name: 'Опции комплекта', value: 'Металлическая лестница с подиумом, Дымоход 2.5м, Защита дымохода, Центральный столик' }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Комплект «УЧ-7» AISI 304',
+    category: 'summer',
+    steel: 'AISI 304',
+    stock: 2,
+    totalStock: 5,
+    oldPrice: 309250,
+    newPrice: 266250,
+    warranty: '15 лет',
+    lifetime: '30 лет',
+    stoveTag: 'Печь с водяной рубашкой',
+    gift: 'Тканевый чехол + подсветка в подарок 🎁',
+    badge: '🔥🔥🔥 Хит сезона',
+    image: 'assets/chan_uch7_main_render.png',
+    imageInterior: null,
+    livePhotos: [
+      'assets/chan_uch8_spec_water_jacket.png',
+      'assets/chan_uch8_spec_trim.png',
+      'assets/chan_uch8_spec_table.png',
+      'assets/chan_uch8_spec_ladder.png',
+      'assets/chan_uch2_spec_chimney.png?v=11',
+      'assets/chan_uch7_spec_chimney_guard.png'
+    ],
+    hotspots: [],
+    ladder: 'Металлическая лестница с площадкой и поручнем',
+    stove: 'Печь с водяной рубашкой + дымоход 2.5 м',
+    hideEquipmentHighlight: true,
+    specs: [
+      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
+      { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
+      { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
+      { name: 'Диаметр чаши', value: '200 см' },
+      { name: 'Вместимость', value: 'До 6 человек' },
+      { name: 'Тип подогрева', value: 'Печь с водяной рубашкой' },
+      { name: 'Рабочий объем', value: '1250 литров' },
+      { name: 'Глубина чаши', value: '97 см' },
+      { name: 'Срок службы', value: '30 лет' },
+      { name: 'Опции комплекта', value: 'Металлическая лестница с подиумом, Дымоход 2.5м, Защита дымохода, Центральный столик' }
     ]
   }
 ];
@@ -387,6 +334,56 @@ function formatPrice(number) {
   }).format(number);
 }
 
+function getSlideChipTitle(imgSrc, index) {
+  if (index === 0) return '3D Вид';
+  const src = imgSrc.toLowerCase();
+  if (src.includes('water_jacket')) return 'Печь';
+  if (src.includes('stove')) return 'Печь';
+  if (src.includes('chimney_sandwich')) return 'Сэндвич';
+  if (src.includes('chimney_guard')) return 'Защита';
+  if (src.includes('chimney')) return 'Дымоход';
+  if (src.includes('trim') && !src.includes('exterior')) return 'Отделка';
+  if (src.includes('exterior_trim')) return 'Внеш. отделка';
+  if (src.includes('table')) return 'Столик';
+  if (src.includes('ladder')) return 'Лестница';
+  if (src.includes('jacuzzi')) return 'Джакузи';
+  if (src.includes('lighting')) return 'Подсветка';
+  if (src.includes('cover')) return 'Термокрышка';
+  return `Фото ${index + 1}`;
+}
+
+function buildChecklistItemsHtml(product) {
+  const items = [];
+  
+  if (product.stoveTag) {
+    items.push(`Печь: <strong>${product.stoveTag}</strong>`);
+  } else if (product.stove) {
+    items.push(`Печь: <strong>${product.stove}</strong>`);
+  }
+  
+  if (product.ladder) {
+    items.push(`Лестница: <strong>${product.ladder}</strong>`);
+  }
+  
+  const optionsSpec = product.specs ? product.specs.find(s => s.name === 'Опции комплекта') : null;
+  if (optionsSpec && optionsSpec.value) {
+    const opts = optionsSpec.value.split(',').map(o => o.trim());
+    opts.forEach(opt => {
+      const lower = opt.toLowerCase();
+      if (!lower.includes('печь') && !lower.includes('лестниц') && !items.some(i => i.toLowerCase().includes(lower))) {
+        items.push(opt);
+      }
+    });
+  }
+
+  return items.map(item => `
+    <li>
+      <i class="fa-solid fa-check check-ico"></i>
+      <span>${item}</span>
+    </li>
+  `).join('');
+}
+
 // РЕНДЕРИНГ КАРТОЧЕК ТОВАРОВ
 function renderProducts() {
   const container = document.getElementById('products-feed');
@@ -394,19 +391,30 @@ function renderProducts() {
 
   container.innerHTML = '';
 
-  PRODUCTS.forEach(product => {
+  // Определяем массив товаров для отрисовки в зависимости от активного фильтра
+  let productsToRender = [];
+  if (currentCapacityFilter === 'small') {
+    productsToRender = SMALL_PRODUCTS;
+  } else if (currentCapacityFilter === 'large') {
+    productsToRender = PREMIUM_PRODUCTS;
+  } else {
+    productsToRender = PRODUCTS;
+  }
+
+  productsToRender.forEach(product => {
     const discount = product.oldPrice - product.newPrice;
     
     // Формируем массив всех слайдов для галереи
     const slides = [
       product.image,
-      product.imageInterior,
+      ...(product.imageInterior ? [product.imageInterior] : []),
       ...(product.livePhotos || [])
     ];
     
     // Генерация HTML слайдов
     const slidesHtml = slides.map((imgSrc, index) => {
-      const isRender = imgSrc.toLowerCase().endsWith('.png') && !imgSrc.includes('banner');
+      const cleanPath = imgSrc.toLowerCase().split('?')[0];
+      const isRender = cleanPath.endsWith('.png') && !cleanPath.includes('banner') && !cleanPath.includes('title') && !cleanPath.includes('spec');
       const isSafety = imgSrc.includes('safety_banner');
       const isThermal = imgSrc.includes('thermal_banner') || imgSrc.includes('hotel_banner') || imgSrc.includes('spa_banner') || imgSrc.includes('pine_banner') || imgSrc.includes('delivery_banner') || imgSrc.includes('cover_banner') || imgSrc.includes('bright_banner');
       const slideClass = isRender ? 'gallery-slide is-render' : (isSafety ? 'gallery-slide is-safety' : (isThermal ? 'gallery-slide is-thermal' : 'gallery-slide'));
@@ -418,10 +426,17 @@ function renderProducts() {
       `;
     }).join('');
     
-    // Генерация точек-индикаторов
-    const dotsHtml = slides.map((_, index) => `
+    // Генерация точек-индикаторов (только если слайдов больше 1)
+    const dotsHtml = slides.length > 1 ? slides.map((_, index) => `
       <span class="indicator-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
-    `).join('');
+    `).join('') : '';
+
+    // Генерация чипов быстрой навигации
+    const chipsHtml = slides.length > 1 ? slides.map((imgSrc, index) => `
+      <button type="button" class="quick-chip-btn ${index === 0 ? 'active' : ''}" data-slide="${index}">
+        ${getSlideChipTitle(imgSrc, index)}
+      </button>
+    `).join('') : '';
 
     // Разметка характеристик
     const specsHtml = product.specs.map(spec => {
@@ -456,8 +471,17 @@ function renderProducts() {
       `).join('');
     }
 
+    let capacityBadgeText = product.capacityText || 'до 6 чел.';
+    if (!product.capacityText) {
+      if (product.category === 'small' || (product.id && product.id.toString().startsWith('small'))) {
+        capacityBadgeText = 'на 3 чел.';
+      } else if (product.category === 'large' || (product.id && product.id.toString().startsWith('large'))) {
+        capacityBadgeText = 'до 10 чел.';
+      }
+    }
+
     const card = document.createElement('article');
-    card.className = 'product-card';
+    card.className = product.isPlaceholder ? 'product-card placeholder-card' : 'product-card';
     card.id = `product-card-${product.id}`;
     
     card.innerHTML = `
@@ -467,17 +491,19 @@ function renderProducts() {
           ${slidesHtml}
         </div>
         
-        <!-- Индикаторы свайпа (точки) -->
-        <div class="gallery-indicators">
-          ${dotsHtml}
-        </div>
-        
-        <!-- Подсказка о свайпе -->
-        <div class="swipe-hint">
-          <i class="fa-solid fa-left-right"></i>
-          <span class="swipe-hint-desktop">Проведите, чтобы увидеть больше фото</span>
-          <span class="swipe-hint-mobile">Проведите</span>
-        </div>
+        ${slides.length > 1 ? `
+          <!-- Индикаторы свайпа (точки) -->
+          <div class="gallery-indicators">
+            ${dotsHtml}
+          </div>
+          
+          <!-- Подсказка о свайпе -->
+          <div class="swipe-hint">
+            <i class="fa-solid fa-left-right"></i>
+            <span class="swipe-hint-desktop">Проведите, чтобы увидеть больше фото</span>
+            <span class="swipe-hint-mobile">Проведите</span>
+          </div>
+        ` : ''}
 
         ${product.badge ? `<span class="card-badge">${product.badge}</span>` : ''}
         
@@ -485,12 +511,22 @@ function renderProducts() {
         ${hotspotsHtml}
         
         <div class="card-badges-absolute">
+          <span class="badge-item capacity"><i class="fa-solid fa-users"></i> ${capacityBadgeText}</span>
           <span class="badge-item warranty"><i class="fa-solid fa-shield-halved"></i> ${product.warranty} гарантии</span>
           <span class="badge-item lifetime"><i class="fa-solid fa-hourglass-half"></i> ${product.lifetime} службы</span>
         </div>
       </div>
       
       <div class="card-body">
+        ${product.isPlaceholder ? `
+          <div class="placeholder-notice">
+            <i class="fa-solid fa-circle-info"></i>
+            <div>
+              <strong>Индивидуальный заказ и расчёт!</strong><br>
+              ${product.description}
+            </div>
+          </div>
+        ` : ''}
         ${product.urgentNotice ? `
           <div class="urgent-notice-box">
             <div class="urgent-notice-icon">🚨</div>
@@ -501,6 +537,11 @@ function renderProducts() {
           </div>
         ` : ''}
         <h3 class="card-title">${product.name}</h3>
+        ${product.stoveTag ? `
+          <div class="card-stove-tag">
+            <i class="fa-solid fa-fire-flame-curved"></i> <span>Тип подогрева: <strong>${product.stoveTag}</strong></span>
+          </div>
+        ` : ''}
         
         <div class="card-gift-box">
           <div class="gift-icon">
@@ -518,7 +559,7 @@ function renderProducts() {
               <span class="price-val-old">${formatPrice(product.oldPrice)}</span>
             </div>
             <div class="price-new">
-              <span class="price-label">ЦЕНА СО СКИДКОЙ:</span>
+              <span class="price-label">${product.isPlaceholder ? 'ОРИЕНТИРОВОЧНО:' : 'ЦЕНА СО СКИДКОЙ:'}</span>
               <span class="price-val-new">${formatPrice(product.newPrice)}</span>
             </div>
           </div>
@@ -534,8 +575,23 @@ function renderProducts() {
               <div class="stock-bar-track">
                 <div class="stock-bar-fill" style="width: ${Math.min(100, Math.max(15, (product.stock / (product.totalStock || 5)) * 100))}%;"></div>
               </div>
+              <div class="live-viewers-box">
+                <span class="live-dot"></span>
+                <span>Сейчас этот комплект смотрят <strong class="viewers-num">${5 + (String(product.id).charCodeAt(0) % 4)} человек</strong></span>
+              </div>
             </div>
           ` : ''}
+        </div>
+
+        <!-- Чек-лист входящих опций -->
+        <div class="package-checklist-box">
+          <div class="checklist-header">
+            <i class="fa-solid fa-square-check"></i>
+            <span><strong>В этот комплект уже входит:</strong></span>
+          </div>
+          <ul class="checklist-list">
+            ${buildChecklistItemsHtml(product)}
+          </ul>
         </div>
 
         <!-- Details Accordion -->
@@ -545,10 +601,12 @@ function renderProducts() {
             <i class="fa-solid fa-chevron-down arrow-icon"></i>
           </summary>
           <div class="details-content">
-            <div class="equipment-highlight">
-              <p><strong><i class="fa-solid fa-stairs"></i> Лестница:</strong> ${product.ladder}</p>
-              <p><strong><i class="fa-solid fa-fire-burner"></i> Очаг нагрева:</strong> ${product.stove}</p>
-            </div>
+            ${!product.hideEquipmentHighlight && (product.ladder || product.stove) ? `
+              <div class="equipment-highlight">
+                ${product.ladder ? `<p><strong><i class="fa-solid fa-stairs"></i> Лестница:</strong> ${product.ladder}</p>` : ''}
+                ${product.stove ? `<p><strong><i class="fa-solid fa-fire-burner"></i> Тип подогрева:</strong> ${product.stove}</p>` : ''}
+              </div>
+            ` : ''}
             <div class="specs-table">
               ${specsHtml}
             </div>
@@ -556,8 +614,8 @@ function renderProducts() {
         </details>
         
         <div class="card-actions">
-          <button class="btn-copy-title" data-title="${product.name}" id="copy-btn-${product.id}">
-            <i class="fa-regular fa-copy"></i> Выбрать этот комплект (скопировать)
+          <button class="btn-copy-title ${product.isPlaceholder ? 'btn-request-calc' : ''}" data-title="${product.name}" id="copy-btn-${product.id}">
+            <i class="fa-regular fa-copy"></i> ${product.isPlaceholder ? 'Запросить расчёт под этот размер (скопировать)' : 'Выбрать этот комплект (скопировать)'}
           </button>
           <span class="copy-hint-text">Название скопируется в буфер. Просто вставьте его в наш диалог.</span>
         </div>
@@ -604,9 +662,23 @@ function renderProducts() {
           });
         };
 
+        const chips = gallery.parentElement.querySelectorAll('.quick-chip-btn');
+        const chipsContainer = gallery.parentElement.querySelector('.gallery-quick-chips');
+
         // Переключение по точкам при клике
         dots.forEach((dot, index) => {
           dot.addEventListener('click', () => {
+            const width = gallery.clientWidth;
+            gallery.scrollTo({
+              left: index * width,
+              behavior: 'smooth'
+            });
+          });
+        });
+
+        // Переключение по кнопочкам-чипам при клике
+        chips.forEach((chip, index) => {
+          chip.addEventListener('click', () => {
             const width = gallery.clientWidth;
             gallery.scrollTo({
               left: index * width,
@@ -626,6 +698,23 @@ function renderProducts() {
               dot.classList.add('active');
             } else {
               dot.classList.remove('active');
+            }
+          });
+
+          chips.forEach((chip, idx) => {
+            if (idx === activeIndex) {
+              chip.classList.add('active');
+              if (chipsContainer) {
+                const chipLeft = chip.offsetLeft;
+                const chipW = chip.clientWidth;
+                const contW = chipsContainer.clientWidth;
+                chipsContainer.scrollTo({
+                  left: chipLeft - (contW / 2) + (chipW / 2),
+                  behavior: 'smooth'
+                });
+              }
+            } else {
+              chip.classList.remove('active');
             }
           });
 
@@ -787,10 +876,100 @@ function initVideoPlayer() {
   });
 }
 
+// ЛИПКАЯ И УМЕНЬШЕННАЯ ПЛАШКА ВМЕСТИМОСТИ ПРИ СКРОЛЛЕ
+function initStickyCapacityFilter() {
+  const mainHeader = document.getElementById('main-header');
+  const capacitySection = document.getElementById('capacity-filter-section');
+  const sentinel = document.getElementById('capacity-sentinel');
+
+  if (!capacitySection) return;
+
+  const updateHeaderOffset = () => {
+    if (mainHeader && capacitySection) {
+      const headerHeight = mainHeader.offsetHeight || 56;
+      capacitySection.style.top = `${headerHeight}px`;
+    }
+  };
+
+  updateHeaderOffset();
+  window.addEventListener('resize', updateHeaderOffset, { passive: true });
+
+  const handleStickyScroll = () => {
+    const headerHeight = mainHeader ? (mainHeader.offsetHeight || 56) : 56;
+    if (sentinel) {
+      const rect = sentinel.getBoundingClientRect();
+      if (rect.top <= headerHeight) {
+        capacitySection.classList.add('is-sticky');
+      } else {
+        capacitySection.classList.remove('is-sticky');
+      }
+    } else {
+      const rect = capacitySection.getBoundingClientRect();
+      if (rect.top <= headerHeight + 2) {
+        capacitySection.classList.add('is-sticky');
+      } else {
+        capacitySection.classList.remove('is-sticky');
+      }
+    }
+  };
+
+  window.addEventListener('scroll', handleStickyScroll, { passive: true });
+  handleStickyScroll();
+}
+
+// ИНИЦИАЛИЗАЦИЯ ПЕРЕКЛЮЧАТЕЛЯ ВМЕСТИМОСТИ
+function initCapacityFilter() {
+  const tabButtons = document.querySelectorAll('.capacity-tab-btn');
+  if (!tabButtons || tabButtons.length === 0) return;
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedCapacity = btn.getAttribute('data-capacity');
+      if (!selectedCapacity || selectedCapacity === currentCapacityFilter) return;
+
+      currentCapacityFilter = selectedCapacity;
+
+      // Обновляем визуальный активный статус кнопок
+      tabButtons.forEach(b => {
+        const isSelected = (b === btn);
+        b.classList.toggle('active', isSelected);
+        b.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+      });
+
+      // Перерисовываем карточки
+      renderProducts();
+
+      // Плавная прокрутка к началу каталога товаров при переключении
+      const feedSection = document.getElementById('products-feed');
+      const capacitySection = document.getElementById('capacity-filter-section');
+      const mainHeader = document.getElementById('main-header');
+
+      if (capacitySection && feedSection) {
+        const isSticky = capacitySection.classList.contains('is-sticky');
+        const headerHeight = mainHeader ? (mainHeader.offsetHeight || 56) : 56;
+        
+        if (isSticky) {
+          const stickyBarHeight = capacitySection.offsetHeight || 50;
+          const targetY = feedSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - stickyBarHeight;
+          window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+        } else {
+          const rect = capacitySection.getBoundingClientRect();
+          if (rect.top < 0) {
+            const targetY = rect.top + window.pageYOffset - headerHeight;
+            window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+          }
+        }
+      }
+    });
+  });
+}
+
 // ИНИЦИАЛИЗАЦИЯ
 document.addEventListener('DOMContentLoaded', () => {
   initCountdownTimer();
   renderProducts();
+  initCapacityFilter();
+  initStickyCapacityFilter();
   initVideoPlayer();
 
   // Инициализация полноэкранного просмотра фото (Lightbox)
@@ -839,8 +1018,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cardImg) {
         const productCard = cardImg.closest('.product-card');
         if (productCard) {
-          const productId = parseInt(productCard.id.replace('product-card-', ''));
-          const product = PRODUCTS.find(p => p.id === productId);
+          const productIdRaw = productCard.id.replace('product-card-', '');
+          const allProducts = [...PRODUCTS, PLACEHOLDER_PRODUCTS.small, PLACEHOLDER_PRODUCTS.large];
+          const product = allProducts.find(p => String(p.id) === String(productIdRaw));
           if (product) {
             // Формируем массив всех слайдов точно так же, как при рендере
             activeGalleryImages = [
@@ -1128,4 +1308,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Динамика числа зрителей в реальном времени
+  setInterval(() => {
+    document.querySelectorAll('.viewers-num').forEach(el => {
+      const current = parseInt(el.textContent) || 6;
+      const delta = (Math.random() > 0.5 ? 1 : -1);
+      let next = current + delta;
+      if (next < 4) next = 5;
+      if (next > 9) next = 8;
+      
+      el.style.transition = 'opacity 0.3s ease';
+      el.style.opacity = '0.3';
+      setTimeout(() => {
+        el.textContent = `${next} человек`;
+        el.style.opacity = '1';
+      }, 300);
+    });
+  }, 6000);
 });

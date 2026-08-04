@@ -55,7 +55,7 @@
 
       <div class="header-badge">
         <span class="status-dot"></span>
-        <span class="status-text">ИП Куклин И. А.</span>
+        <span class="status-text">ООО «ЧЗНК»</span>
       </div>
     </div>
   </header>
@@ -66,14 +66,16 @@
     <section class="hero-section" id="hero-section">
       <div class="hero-overlay"></div>
       <div class="hero-body">
-        <h1 class="hero-title">Горячие предложения недели 🔥</h1>
-        <p class="hero-subtitle">Выбирайте комплектацию и заказывайте чан напрямую от производителя с выгодой до 35 000 ₽</p>
+        <div class="hero-header-text">
+          <h1 class="hero-title">Горячие предложения от завода 🔥</h1>
+          <p class="hero-subtitle">Выбирайте комплектацию напрямую от производителя с выгодой до 48 000 ₽ и получите тканевый чехол + LED-подсветку в подарок 🎁</p>
+        </div>
         
         <!-- Timer Block -->
         <div class="timer-container" id="timer-container">
           <div class="timer-header">
             <i class="fa-regular fa-clock icon-pulse"></i>
-            <span>Спеццены и подарки действуют еще:</span>
+            <span>Зафиксируйте спеццену и 2 подарка к заказу:</span>
           </div>
           <div class="timer-countdown" id="countdown">
             <div class="timer-segment">
@@ -101,6 +103,35 @@
     </section>
 
 
+
+    <!-- Capacity Filter Section (Переключатель по вместимости) -->
+    <div id="capacity-sentinel"></div>
+    <section class="capacity-filter-section" id="capacity-filter-section">
+      <div class="capacity-filter-container">
+        <h2 class="capacity-filter-heading">
+          <i class="fa-solid fa-users-gear"></i> Выберите вместимость банного чана:
+        </h2>
+        <div class="capacity-tabs" role="tablist" aria-label="Вместимость банных чанов">
+          <button class="capacity-tab-btn" data-capacity="small" role="tab" aria-selected="false">
+            <span class="tab-badge">на 3 чел.</span>
+            <span class="tab-title"><i class="fa-solid fa-user-group"></i> <span class="title-full">Малые чаны</span><span class="title-short" style="display:none">Малые</span></span>
+            <span class="tab-sub">Ø 180 см</span>
+          </button>
+          
+          <button class="capacity-tab-btn active" data-capacity="medium" role="tab" aria-selected="true">
+            <span class="tab-badge popular">Хит продаж 🔥</span>
+            <span class="tab-title"><i class="fa-solid fa-users"></i> <span class="title-full">4–6 человек</span><span class="title-short" style="display:none">4–6 чел.</span></span>
+            <span class="tab-sub">Ø 200 см (Средние)</span>
+          </button>
+          
+          <button class="capacity-tab-btn" data-capacity="large" role="tab" aria-selected="false">
+            <span class="tab-badge popular">👑 Премиум SPA</span>
+            <span class="tab-title"><i class="fa-solid fa-hot-tub-person"></i> <span class="title-full">Гидромассаж</span><span class="title-short" style="display:none">Гидромассаж</span></span>
+            <span class="tab-sub">Массаж + Подсветка</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
     <!-- Product Feed -->
     <section class="products-feed" id="products-feed">
@@ -130,7 +161,6 @@
             </button>
             <div class="video-cover-info">
               <span class="video-duration"><i class="fa-solid fa-play"></i> Смотреть обзор</span>
-              <span class="video-quality">4K UltraHD</span>
             </div>
           </div>
           <div class="video-iframe-container" id="video-iframe-container"></div>
@@ -272,7 +302,7 @@
           Скопируйте название понравившегося комплекта и отправьте его менеджеру в диалог.
         </p>
       </div>
-      <p class="footer-copyright">© Уральские Банные Чаны. ИП Куклин И. А.</p>
+      <p class="footer-copyright">© Уральские Банные Чаны</p>
       <p class="footer-legal" style="font-size: 11px; color: var(--text-muted); margin-top: 4px; opacity: 0.85;">ИНН 381404122559 | ОГРНИП 321385000062371</p>
     </div>
   </footer>
@@ -301,7 +331,7 @@
       <div class="gifts-modal-body">
         <div class="gift-preview-card">
           <div class="gift-preview-img-wrapper">
-            <img src="assets/gift_cover.jpg" alt="Тканевый чехол в подарок" class="gift-preview-img">
+            <img src="assets/chan_uch8_spec_cover.png" alt="Тканевый чехол в подарок" class="gift-preview-img">
           </div>
           <div class="gift-preview-info">
             <h4>Фирменный водонепроницаемый чехол</h4>
@@ -310,7 +340,7 @@
         </div>
         <div class="gift-preview-card">
           <div class="gift-preview-img-wrapper">
-            <img src="assets/gift_backlight.jpg" alt="Разноцветная диодная подсветка" class="gift-preview-img">
+            <img src="assets/chan_uch8_spec_lighting.png" alt="Разноцветная диодная подсветка" class="gift-preview-img">
           </div>
           <div class="gift-preview-info">
             <h4>Яркая многоцветная подсветка</h4>
