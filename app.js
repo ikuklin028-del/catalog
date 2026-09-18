@@ -46,7 +46,7 @@ const SMALL_PRODUCTS = [
     stock: 4,
     totalStock: 7,
     oldPrice: 183000,
-    newPrice: 150000,
+    newPrice: 159000,
     warranty: '7 лет',
     lifetime: '15 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
