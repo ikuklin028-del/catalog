@@ -1,3 +1,73 @@
+function getUpgradeNote(product) {
+ const notes = {
+  'small-2': ['Лестница, дымоход и печь-подставка', 'На 25 700 ₽ дороже УЧ-1.'],
+  '2': ['Сталь 304 вместо 430', 'На 25 500 ₽ дороже УЧ-3. Та же комплектация, гарантия 10 лет вместо 7.'],
+  '4': ['Металлическая лестница, столик и защита дымохода', 'На 21 300 ₽ дороже УЧ-3. Металлическая лестница вместо деревянной.'],
+  '5': ['Сталь 304 вместо 430', 'На 25 500 ₽ дороже УЧ-5. Та же комплектация, гарантия 10 лет вместо 7.'],
+  '6': ['Печь с водяной рубашкой', 'На 44 400 ₽ дороже УЧ-6. Вместо печи-подставки.']
+ };
+ const note=notes[String(product.id)];
+ return note ? `<div class="upgrade-note"><strong>${note[0]}</strong><p>${note[1]}</p></div>` : '';
+}
+function getCompactEquipment(product) {
+ const items = getEquipmentItems(product).map(item => item.replace(/<[^>]*>/g, ''));
+ const options = product.specs.find(spec => spec.name === 'Опции комплекта')?.value || '';
+ options.split(/[,;]/).map(value => value.trim()).filter(value => /^без /i.test(value)).forEach(value => items.push(value));
+ const shorten = item => {
+  if (/печь-подставка/i.test(item)) return 'Печь-подставка с дном';
+  if (/металлическая лестница/i.test(item)) return 'Металлическая лестница с площадкой и поручнем';
+  if (/лестница/i.test(item) && !/^без /i.test(item)) return 'Деревянная лестница';
+  if (/сэндвич/i.test(item)) return 'Сэндвич-дымоход 3 м';
+  if (/дымох?ода? 2[.,]5\s?м/i.test(item)) return 'Дымоход 2,5 м';
+  if (/комплект джакузи/i.test(item)) return 'Гидромассаж';
+  return item;
+ };
+ return '<span class="equipment-label">Уже в цене</span><ul class="equipment-list">' + items.map(item => `<li class="${/^без /i.test(item)?'equipment-excluded':''}"><span aria-hidden="true">${/^без /i.test(item)?'−':'✓'}</span><span>${shorten(item)}</span></li>`).join('') + '</ul>';
+}
+function renderModelComparison(products) {
+ const container = document.getElementById('model-comparison');
+ if (!container) return;
+ container.innerHTML = `<details class="comparison-disclosure"><summary><span>Сравнить комплекты <small>${products.length} ${products.length === 1 ? 'комплект' : products.length < 5 ? 'комплекта' : 'комплектов'}</small></span><span class="comparison-toggle" aria-hidden="true">+</span></summary><p class="comparison-instruction">Нажмите на модель, чтобы перейти к её фото и составу.</p><div class="comparison-rows">${products.map(p => {
+  const options = p.specs.find(s => s.name === 'Опции комплекта')?.value.toLowerCase() || '';
+  const features = [p.steel, p.ladder ? (p.ladder.includes('Металлическая') ? 'Металлическая лестница' : 'Деревянная лестница') : 'Без лестницы'];
+  if(options.includes('столик')) features.push('Столик');
+  if(options.includes('защита')) features.push('Защита дымохода');
+  if(p.stoveTag) features.push('Печь с водяной рубашкой');
+  else features.push(p.stove.includes('Ветрозащита') ? 'Ветрозащита без дна' : 'Печь-подставка');
+  if(options.includes('джакузи')) features.push('Гидромассаж');
+  const model = p.name.match(/УЧ-\d+/)?.[0] || p.name;
+  return `<a class="comparison-row" href="#product-card-${p.id}"><span class="comparison-row-top"><strong>${model}</strong><b>${formatPrice(p.newPrice)}</b><span aria-hidden="true">↓</span></span><span class="comparison-features">${features.join(' · ')}</span></a>`;
+ }).join('')}</div></details>`;
+ container.querySelectorAll('.comparison-row').forEach(link => link.addEventListener('click', () => { container.querySelector('details').open = false; }));
+}
+const winterRevealObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('revealed'); winterRevealObserver.unobserve(entry.target); } });
+}, {threshold: 0.05}) : null;
+function getProductSubtitle(p) {
+  if (p.category === 'small') return 'КОМПАКТНЫЙ · НА 3 ЧЕЛОВЕКА';
+  if (p.category === 'large') return 'ЛИЧНЫЙ SPA · С ГИДРОМАССАЖЕМ';
+  if (p.stoveTag) return 'С ПЕЧЬЮ С ВОДЯНОЙ РУБАШКОЙ';
+  if (p.ladder?.includes('Металлическая')) return 'С МЕТАЛЛИЧЕСКОЙ ЛЕСТНИЦЕЙ И СТОЛИКОМ';
+  return 'КЛАССИЧЕСКИЙ · ДО 6 ЧЕЛОВЕК';
+}
+function showCopyToast(message) {
+  const toast = document.querySelector('.copy-toast');
+  if (!toast) return;
+  toast.textContent = message; toast.classList.add('visible');
+  clearTimeout(window.copyToastTimer);
+  window.copyToastTimer = setTimeout(() => toast.classList.remove('visible'), 4500);
+}
+async function copyProductTitle(title) {
+  try { if (!navigator.clipboard) throw new Error('Clipboard unavailable'); await navigator.clipboard.writeText(title); }
+  catch (_) {
+    const area = document.createElement('textarea'); area.value = title;
+    area.style.cssText = 'position:fixed;opacity:0;font-size:16px'; document.body.appendChild(area);
+    area.select(); area.setSelectionRange(0, title.length);
+    const copied = document.execCommand('copy'); area.remove();
+    if (!copied) throw new Error('Copy failed');
+  }
+  showCopyToast('Название скопировано. Вернитесь в диалог и отправьте менеджеру.');
+}
 // Состояние выбранного фильтра по вместимости ('small', 'medium', 'large')
 let currentCapacityFilter = 'medium';
 
@@ -90,7 +160,7 @@ const PREMIUM_PRODUCTS = [
     totalStock: 5,
     oldPrice: 573461,
     newPrice: 470050,
-    warranty: '15 лет',
+    warranty: '10 лет',
     lifetime: '30 лет',
     stoveTag: 'Печь с водяной рубашкой',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
@@ -113,7 +183,7 @@ const PREMIUM_PRODUCTS = [
     stove: 'Печь с водяной рубашкой',
     hideEquipmentHighlight: true,
     specs: [
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
+      { name: 'Материал чаши', value: 'Пищевая нержавеющая сталь AISI 304' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
       { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
       { name: 'Диаметр чаши', value: '200 см' },
@@ -176,7 +246,7 @@ const PRODUCTS = [
     totalStock: 5,
     oldPrice: 228750,
     newPrice: 187500,
-    warranty: '15 лет',
+    warranty: '10 лет',
     lifetime: '30 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥 Популярность',
@@ -193,7 +263,7 @@ const PRODUCTS = [
     stove: 'Печь-подставка с металлическим дном',
     hideEquipmentHighlight: true,
     specs: [
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
+      { name: 'Материал чаши', value: 'Пищевая нержавеющая сталь AISI 304' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
       { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
       { name: 'Диаметр чаши', value: '200 см' },
@@ -254,7 +324,7 @@ const PRODUCTS = [
     totalStock: 6,
     oldPrice: 254736,
     newPrice: 208800,
-    warranty: '15 лет',
+    warranty: '10 лет',
     lifetime: '30 лет',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
     badge: '🔥🔥🔥 Хит сезона',
@@ -273,7 +343,7 @@ const PRODUCTS = [
     stove: 'Печь-подставка с металлическим дном',
     hideEquipmentHighlight: true,
     specs: [
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
+      { name: 'Материал чаши', value: 'Пищевая нержавеющая сталь AISI 304' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
       { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
       { name: 'Диаметр чаши', value: '200 см' },
@@ -294,7 +364,7 @@ const PRODUCTS = [
     totalStock: 5,
     oldPrice: 308904,
     newPrice: 253200,
-    warranty: '15 лет',
+    warranty: '10 лет',
     lifetime: '30 лет',
     stoveTag: 'Печь с водяной рубашкой',
     gift: 'Тканевый чехол + подсветка в подарок 🎁',
@@ -314,7 +384,7 @@ const PRODUCTS = [
     stove: 'Печь с водяной рубашкой',
     hideEquipmentHighlight: true,
     specs: [
-      { name: 'Материал чаши', value: 'Нержавеющая сталь AISI 304' },
+      { name: 'Материал чаши', value: 'Пищевая нержавеющая сталь AISI 304' },
       { name: 'Толщина металла', value: 'Стенки 2 мм, дно 3 мм' },
       { name: 'Внутренняя отделка', value: 'Сибирская лиственница' },
       { name: 'Диаметр чаши', value: '200 см' },
@@ -355,7 +425,7 @@ function getSlideChipTitle(imgSrc, index) {
   return `Фото ${index + 1}`;
 }
 
-function buildChecklistItemsHtml(product) {
+function getEquipmentItems(product) {
   const items = [];
   
   if (product.stoveTag) {
@@ -381,7 +451,11 @@ function buildChecklistItemsHtml(product) {
     });
   }
 
-  return items.map(item => `
+  return items;
+}
+
+function buildChecklistItemsHtml(product) {
+  return getEquipmentItems(product).map(item => `
     <li>
       <i class="fa-solid fa-check check-ico"></i>
       <span>${item}</span>
@@ -406,6 +480,7 @@ function renderProducts() {
     productsToRender = PRODUCTS;
   }
 
+  renderModelComparison(productsToRender);
   productsToRender.forEach(product => {
     const discount = product.oldPrice - product.newPrice;
     
@@ -433,7 +508,7 @@ function renderProducts() {
     
     // Генерация точек-индикаторов (только если слайдов больше 1)
     const dotsHtml = slides.length > 1 ? slides.map((_, index) => `
-      <span class="indicator-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
+      <button type="button" aria-label="Показать фото ${index + 1}" class="indicator-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></button>
     `).join('') : '';
 
     // Генерация чипов быстрой навигации
@@ -510,7 +585,7 @@ function renderProducts() {
           </div>
         ` : ''}
 
-        ${product.badge ? `<span class="card-badge">${product.badge}</span>` : ''}
+        <span class="card-badge">${product.steel}</span>
         
         <!-- Хотспоты (интерактивные точки) -->
         ${hotspotsHtml}
@@ -541,22 +616,15 @@ function renderProducts() {
             </div>
           </div>
         ` : ''}
-        <h3 class="card-title">${product.name}</h3>
+        <span class="card-kicker">${getProductSubtitle(product)}</span><h3 class="card-title">${product.name}</h3><p class="card-size-line">${capacityBadgeText} <span>·</span> Ø ${product.category === 'small' ? '180' : '200'} см</p>
+        ${product.steel === 'AISI 304' ? '<p class="steel-benefit"><span>AISI 304 · пищевая нержавеющая сталь</span>Стойкая к коррозии · простой уход</p>' : ''}
         ${product.stoveTag ? `
           <div class="card-stove-tag">
             <i class="fa-solid fa-fire-flame-curved"></i> <span>Тип подогрева: <strong>${product.stoveTag}</strong></span>
           </div>
         ` : ''}
         
-        <div class="card-gift-box">
-          <div class="gift-icon">
-            <i class="fa-solid fa-gift pulse"></i>
-          </div>
-          <div class="gift-text">
-            <strong>ПОДАРОК:</strong> ${product.gift} <span class="gift-view-link">(Посмотреть фото 📷)</span>
-          </div>
-        </div>
-        
+        <button type="button" class="gift-view-link gift-compact"><i class="fa-solid fa-gift" aria-hidden="true"></i> Чехол и подсветка в подарок <span aria-hidden="true">↗</span></button>
         <div class="card-price-block">
           <div class="price-row">
             <div class="price-old">
@@ -571,23 +639,25 @@ function renderProducts() {
           <div class="price-discount">
             <i class="fa-solid fa-circle-check"></i> Ваша экономия: <strong>${formatPrice(discount)}</strong>
           </div>
-          ${product.stock ? `
-            <div class="price-stock">
-              <div class="stock-info">
-                <span class="stock-label"><i class="fa-solid fa-fire-flame-curved icon-pulse-red"></i> Осталось по акции:</span>
-                <span class="stock-val"><strong>${product.stock} шт.</strong></span>
-              </div>
-              <div class="stock-bar-track">
-                <div class="stock-bar-fill" style="width: ${Math.min(100, Math.max(15, (product.stock / (product.totalStock || 5)) * 100))}%;"></div>
-              </div>
-              <div class="live-viewers-box">
-                <span class="live-dot"></span>
-                <span>Сейчас этот комплект смотрят <strong class="viewers-num">${5 + (String(product.id).charCodeAt(0) % 4)} человек</strong></span>
-              </div>
-            </div>
-          ` : ''}
+
         </div>
 
+        ${getUpgradeNote(product)}
+        <div class="compact-equipment">${getCompactEquipment(product)}</div>
+        <div class="card-actions">
+          <button class="btn-copy-title ${product.isPlaceholder ? 'btn-request-calc' : ''}" data-title="${product.name}" id="copy-btn-${product.id}">
+            <i class="fa-regular fa-copy"></i> ${product.isPlaceholder ? 'Запросить расчёт под этот размер (скопировать)' : 'Выбрать этот комплект'}
+          </button>
+          <span class="copy-hint-text">Название скопируется. Отправьте его в наш диалог.</span>
+        </div>
+
+        <!-- Details Accordion -->
+        <details class="card-details" id="details-${product.id}">
+          <summary class="details-summary">
+            <span><i class="fa-solid fa-list-check"></i> Комплектация и параметры</span>
+            <i class="fa-solid fa-chevron-down arrow-icon"></i>
+          </summary>
+          <div class="details-content">
         <!-- Чек-лист входящих опций -->
         <div class="package-checklist-box">
           <div class="checklist-header">
@@ -599,13 +669,7 @@ function renderProducts() {
           </ul>
         </div>
 
-        <!-- Details Accordion -->
-        <details class="card-details" id="details-${product.id}">
-          <summary class="details-summary">
-            <span><i class="fa-solid fa-list-check"></i> Комплектация и параметры</span>
-            <i class="fa-solid fa-chevron-down arrow-icon"></i>
-          </summary>
-          <div class="details-content">
+
             ${!product.hideEquipmentHighlight && (product.ladder || product.stove) ? `
               <div class="equipment-highlight">
                 ${product.ladder ? `<p><strong><i class="fa-solid fa-stairs"></i> Лестница:</strong> ${product.ladder}</p>` : ''}
@@ -618,16 +682,12 @@ function renderProducts() {
           </div>
         </details>
         
-        <div class="card-actions">
-          <button class="btn-copy-title ${product.isPlaceholder ? 'btn-request-calc' : ''}" data-title="${product.name}" id="copy-btn-${product.id}">
-            <i class="fa-regular fa-copy"></i> ${product.isPlaceholder ? 'Запросить расчёт под этот размер (скопировать)' : 'Выбрать этот комплект (скопировать)'}
-          </button>
-          <span class="copy-hint-text">Название скопируется в буфер. Просто вставьте его в наш диалог.</span>
-        </div>
+
       </div>
     `;
     
     container.appendChild(card);
+    winterRevealObserver?.observe(card);
 
     // Логика отслеживания свайпа для обновления точек
     setTimeout(() => {
@@ -971,7 +1031,7 @@ function initCapacityFilter() {
 
 // ИНИЦИАЛИЗАЦИЯ
 document.addEventListener('DOMContentLoaded', () => {
-  initCountdownTimer();
+  // Winter edition: no recurring promotional countdown.
   renderProducts();
   initCapacityFilter();
   initStickyCapacityFilter();
@@ -1024,13 +1084,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const productCard = cardImg.closest('.product-card');
         if (productCard) {
           const productIdRaw = productCard.id.replace('product-card-', '');
-          const allProducts = [...PRODUCTS, PLACEHOLDER_PRODUCTS.small, PLACEHOLDER_PRODUCTS.large];
+          const allProducts = [...PRODUCTS, ...SMALL_PRODUCTS, ...PREMIUM_PRODUCTS];
           const product = allProducts.find(p => String(p.id) === String(productIdRaw));
           if (product) {
             // Формируем массив всех слайдов точно так же, как при рендере
             activeGalleryImages = [
               product.image,
-              product.imageInterior,
+              ...(product.imageInterior ? [product.imageInterior] : []),
               ...(product.livePhotos || [])
             ];
             
@@ -1041,6 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             updateLightboxImage();
             lightboxModal.classList.add('active');
+        lightboxModal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('lightbox-open');
           }
         }
@@ -1059,6 +1120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateLightboxImage();
         lightboxModal.classList.add('active');
+        lightboxModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('lightbox-open');
       }
     });
@@ -1067,6 +1129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lightboxClose) {
       lightboxClose.addEventListener('click', () => {
         lightboxModal.classList.remove('active');
+        lightboxModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('lightbox-open');
         lightboxImg.classList.remove('is-render');
         activeGalleryImages = [];
@@ -1092,6 +1155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxModal.addEventListener('click', (e) => {
       if (e.target === lightboxModal || e.target.classList.contains('lightbox-content')) {
         lightboxModal.classList.remove('active');
+        lightboxModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('lightbox-open');
         lightboxImg.classList.remove('is-render');
         activeGalleryImages = [];
@@ -1104,6 +1168,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (e.key === 'Escape') {
         lightboxModal.classList.remove('active');
+        lightboxModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('lightbox-open');
         lightboxImg.classList.remove('is-render');
         activeGalleryImages = [];
@@ -1139,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = e.target.closest('.btn-copy-title');
     if (btn) {
       const title = btn.getAttribute('data-title');
-      navigator.clipboard.writeText(title).then(() => {
+      copyProductTitle(title).then(() => {
         const originalText = btn.innerHTML;
         btn.innerHTML = '<i class="fa-solid fa-check"></i> Скопировано! Вставьте в чат';
         btn.classList.add('copied');
@@ -1148,22 +1213,8 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.innerHTML = originalText;
           btn.classList.remove('copied');
         }, 3000);
-      }).catch(err => {
-        console.error('Ошибка копирования:', err);
-        const area = document.createElement('textarea');
-        area.value = title;
-        document.body.appendChild(area);
-        area.select();
-        document.execCommand('copy');
-        document.body.removeChild(area);
-        
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Скопировано! Вставьте в чат';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-          btn.classList.remove('copied');
-        }, 3000);
+      }).catch(() => {
+        showCopyToast('Не удалось скопировать. Название комплекта: ' + title);
       });
     }
   });
@@ -1314,21 +1365,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Динамика числа зрителей в реальном времени
-  setInterval(() => {
-    document.querySelectorAll('.viewers-num').forEach(el => {
-      const current = parseInt(el.textContent) || 6;
-      const delta = (Math.random() > 0.5 ? 1 : -1);
-      let next = current + delta;
-      if (next < 4) next = 5;
-      if (next > 9) next = 8;
-      
-      el.style.transition = 'opacity 0.3s ease';
-      el.style.opacity = '0.3';
-      setTimeout(() => {
-        el.textContent = `${next} человек`;
-        el.style.opacity = '1';
-      }, 300);
-    });
-  }, 6000);
+
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const snow = document.querySelector('.snowfall');
+  if (snow && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    for (let i = 0; i < 24; i++) {
+      const flake = document.createElement('span');
+      flake.style.cssText = `--x:${(i * 41.7) % 100}%;--duration:${9 + i % 8}s;--delay:-${i * 1.3}s;--size:${2 + i % 3}px`;
+      snow.appendChild(flake);
+    }
+    const heroObserver = new IntersectionObserver(([entry]) => document.querySelector('.winter-hero').classList.toggle('motion-paused', !entry.isIntersecting));
+    heroObserver.observe(document.querySelector('.winter-hero'));
+    document.addEventListener('visibilitychange', () => document.body.classList.toggle('page-hidden', document.hidden));
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+ const video=document.querySelector('.winter-video');
+ if(!video)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const hero=document.querySelector('.winter-hero');
+ const toggle=document.querySelector('.scene-motion-toggle');
+ let visible=true, userPaused=false, failed=false;
+ const update=()=>{
+  const paused=userPaused||reduced.matches||failed;
+  hero.classList.toggle('scene-paused',paused);
+  toggle.hidden=failed;
+  toggle.setAttribute('aria-pressed',String(paused));
+  toggle.setAttribute('aria-label',paused?'Включить анимацию':'Приостановить анимацию');
+  toggle.firstElementChild.textContent=paused?'▷':'Ⅱ';
+  if(document.hidden||paused||!visible)video.pause();else video.play().catch(()=>{});
+ };
+ toggle.addEventListener('click',()=>{userPaused=!userPaused;update();});
+ video.addEventListener('error',()=>{failed=true;video.style.display='none';update();});
+ new IntersectionObserver(([e])=>{visible=e.isIntersecting;update();}).observe(hero);
+ document.addEventListener('visibilitychange',update);
+ reduced.addEventListener('change',update);
+ update();
 });
